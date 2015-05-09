@@ -1,0 +1,69 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink]
+"FontLinkControl"=dword:00004000
+"FontLinkDefaultChar"=dword:00003000
+
+/* 平滑化(anti-alias) 備註 */
+/* 如果覺得開了之後字體難看，把三個 Y 改成 N，有些字型要開啟平滑化才好看 */
+[HKEY_CURRENT_USER\Software\Wine\X11 Driver]
+"ClientSideAntiAliasWithCore"="Y"
+"ClientSideAntiAliasWithRender"="Y"
+"ClientSideWithRender"="Y"
+
+/* 平滑字型 */
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"FontSmoothing"="2"
+
+/* 替換字型1 */
+/* 這裡以 Droid Sans Fallback 為例，請自行改成你要的字型名稱 */
+/* 我很懶，所以都改成同一種字型。你也可以改成多種不同的字型 */
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontSubstitutes]
+"Arial Baltic,186"="Droid Sans Fallback"
+"Arial CE,238"="Droid Sans Fallback"
+"Arial CYR,204"="Droid Sans Fallback"
+"Arial Greek,161"="Droid Sans Fallback"
+"Arial TUR,162"="Droid Sans Fallback"
+"Courier New Baltic,186"="Droid Sans Fallback"
+"Courier New CE,238"="Droid Sans Fallback"
+"Courier New CYR,204"="Droid Sans Fallback"
+"Courier New Greek,161"="Droid Sans Fallback"
+"Courier New TUR,162"="Droid Sans Fallback"
+"Helv"="Droid Sans Fallback"
+"Helvetica"="Droid Sans Fallback"
+"MS Shell Dlg"="Droid Sans Fallback"
+"MS Shell Dlg 2"="Droid Sans Fallback"
+"PMingLiU"="Droid Sans Fallback"
+"新細明體"="Droid Sans Fallback"
+"Tahoma"="Droid Sans Fallback"
+"Times"="Droid Sans Fallback"
+"Times New Roman Baltic,186"="Droid Sans Fallback"
+"Times New Roman CE,238"="Droid Sans Fallback"
+"Times New Roman CYR,204"="Droid Sans Fallback"
+"Times New Roman Greek,161"="Droid Sans Fallback"
+"Times New Roman TUR,162"="Droid Sans Fallback"
+"Tms Rmn"="Droid Sans Fallback"
+
+/* 替換字型2 */
+/* 我很懶，所以都改成同一種字型。你也可以改成多種不同的字型 */
+[HKEY_CURRENT_USER\Software\Wine\Fonts\Replacements]
+@="Droid Sans Fallback"
+"Arial"="Droid Sans Fallback"
+"Fixedsys"="Droid Sans Fallback"
+"Microsoft Sans Serif"="Droid Sans Fallback"
+"MingLiU"="Droid Sans Fallback"
+"MS UI Gothic"="Droid Sans Fallback"
+"PMingLiU"="Droid Sans Fallback"
+"Simsun"="Droid Sans Fallback"
+"Songti"="Droid Sans Fallback"
+"System"="Droid Sans Fallback"
+"Tahoma"="Droid Sans Fallback"
+"Terminal"="Droid Sans Fallback"
+
+/* 取代字型 */
+/* Wine 1.1.13 改這裡似乎看不出有什麼用，Linux系列不過改就改了，沒差啦 */
+"Microsoft Sans Serif"="DroidSansFallback.ttf,Droid Sans Fallback"
+"SimSun"="DroidSansFallback.ttf,Droid Sans Fallback"
+"Tahoma"="DroidSansFallback.ttf,Droid Sans Fallback"
+"PMingLiU"="DroidSansFallback.ttf,Droid Sans Fallback"
+"Lucida Sans Unicode"="DroidSansFallback.ttf,Droid Sans Fallback"

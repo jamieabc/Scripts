@@ -1,0 +1,2 @@
+#!/bin/sh
+grep $1 * -RHns --color=auto --exclude=cscope* --exclude=GTAGS --exclude-dir=svn --exclude=*html --exclude=tags --exclude=*.o

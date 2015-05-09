@@ -1,0 +1,2 @@
+#!/bin/sh
+find . -name $1|xargs grep -Hn --color=auto $2

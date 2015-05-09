@@ -1,0 +1,2 @@
+#!/bin/sh
+diff -aur -x '*.git' -x '*.png' -x '*.rle' -x '*.rej' -x '*.repo' -x '*tags' -x 'TAGS' -x 'GTAGS' -x 'GPATH' -x 'GRTAGS' -x 'filenametags' $1 $2

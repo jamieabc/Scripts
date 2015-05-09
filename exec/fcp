@@ -1,0 +1,14 @@
+#!/bin/sh
+if [ $# == 0 ]; then
+    echo "Usage: fcp [file_name] [source_path] [destination_path]"
+    echo "Usage: fcp [file_name] . [destination_path]"
+    exit
+fi
+
+if [ $# == 1 ]; then
+    find . -type f -name $1 -exec cp -rfpv {} ~/tmp \;
+elif [ $# = 2 ]; then
+    find . -type f -name $1 -exec cp -rfpv {} $2 \;
+elif [ $# = 3 ]; then
+    find $2 -type f -name $1 -exec cp -rfpv {} $3 \;
+fi
