@@ -19,6 +19,7 @@ if [ "$2" == "1" ]; then
         rm GTAGS
         rm GRTAGS
         rm GPATH
+        rm gtags.files
 
     elif [ "$1" == "c" ]; then
         if [ -f tags ]; then
@@ -50,7 +51,7 @@ if [ "$1" == "e" ]; then
     #gtags -f gtags.files
     if [ ! -f GTAGS ]; then
         #gtags --gtagsconf ~/.emacs.d/gtags.conf
-        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.html" -not -path '*/node_modules/*' -not -path "*/build/*" > gtags.files
+        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.html" -o -name "*.json" | grep -vE '(node_modules|buld)' > gtags.files
         gtags -f gtags.files
     else
         #gtags -i --gtagsconf ~/.emacs.d/gtags.conf
