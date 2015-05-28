@@ -16,27 +16,23 @@ fi
 # Delete tag files
 if [ "$2" == "1" ]; then
     if [ "$1" == "e" ]; then
-        if [ -f TAGS ]; then
-            trash TAGS
-            trash GTAGS
-            trash GRTAGS
-            trash GPATH
-        fi
+        rm GTAGS
+        rm GRTAGS
+        rm GPATH
 
     elif [ "$1" == "c" ]; then
         if [ -f tags ]; then
-            trash tags
+            rm tags
         fi
 
     elif [ "$1" == "s" ]; then
         if [ -f cscope.files ]; then
-            trash cscope.files
-            trash cscope.in.out
-            trash cscope.out
-            trash cscope.po.out
+            rm cscope.files
+            rm cscope.in.out
+            rm cscope.out
+            rm cscope.po.out
         fi
     fi
-
 fi
 
 if [ "$1" == "e" ]; then
@@ -54,7 +50,8 @@ if [ "$1" == "e" ]; then
     #gtags -f gtags.files
     if [ ! -f GTAGS ]; then
         #gtags --gtagsconf ~/.emacs.d/gtags.conf
-        gtags
+        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.html" -not -path '*/node_modules/*' -not -path "*/build/*" > gtags.files
+        gtags -f gtags.files
     else
         #gtags -i --gtagsconf ~/.emacs.d/gtags.conf
         gtags -i
