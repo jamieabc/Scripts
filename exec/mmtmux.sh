@@ -12,13 +12,14 @@ then
     tmux new-window -t work:1 -n Rails 'cd ~/Documents/Project/vpon-dsp; sleep 5; zeus server'
 
     # run babel @ vpon-dsp
-    tmux new-window -t work:2 -n Babel 'cd ~/Documents/Project/vpon-dsp; rm -rf public/app/flux/build/; babel public/app/flux/src/ -d public/app/flux/build --modules amd -w'
+    #tmux new-window -t work:2 -n Babel 'cd ~/Documents/Project/vpon-dsp; rm -rf public/app/flux/build/; babel public/app/flux/src/ -d public/app/flux/build --modules amd -w'
 
-    # tig
-    tmux new-window -t work:3 -n git 'cd ~/Documents/Project/vpon-dsp; tig'
 
     # run npm watch
-    #tmux new-window -t work:3 -n npm-watch 'cd ~/Documents/Project/vpon-dsp/public/app/flux; npm run build:watch'
+    tmux new-window -t work:3 -n npm-watch 'cd ~/Documents/Project/vpon-dsp/public/app/flux; npm run build:watch'
+
+    # tig
+    tmux new-window -t work:4 -n git 'cd ~/Documents/Project/vpon-dsp; tig'
 
     # display mytop & iostat of server 156
     #tmux new-window -t work:2 -n 56 'mytop -s 1 --noi --noheader -h 192.168.101.156 -u admin -p s123456'
