@@ -14,7 +14,6 @@ then
     # run babel @ vpon-dsp
     #tmux new-window -t work:2 -n Babel 'cd ~/Documents/Project/vpon-dsp; rm -rf public/app/flux/build/; babel public/app/flux/src/ -d public/app/flux/build --modules amd -w'
 
-
     # run npm watch
     tmux new-window -t work:3 -n npm-watch 'cd ~/Documents/Project/vpon-dsp/public/app/flux; npm run build:watch'
 
