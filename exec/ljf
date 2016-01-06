@@ -10,7 +10,7 @@ var parser = new htmlParser.Parser({
     // success job class name: job-status-blue
     // fail job class name: job-status-red
     if(name === "tr" && attribs.id && attribs.class && attribs.class.match(/red/)){
-      console.log(attribs.id);
+      console.log(attribs.id.replace('job_', ''));
     }
   },
 }, {decodeEntities: true});
