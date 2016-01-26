@@ -3,5 +3,5 @@ regions=( us-east-1 us-west-1 us-west-2 eu-west-1 eu-central-1 ap-southeast-1 ap
 for region in ${regions[@]}
 do
 	echo "Region: ${region}"
-	aws ec2 describe-instances --output table --query "Reservations[*].Instances[*].[InstanceId, InstanceType, KeyName, Tags[?Key=='Name'].Value|[0], LaunchTime]" --filters "Name=instance-state-name, Values=running" --region $region
+    aws ec2 describe-instances --output table --query "Reservations[*].Instances[*].[InstanceId, InstanceType, KeyName, SecurityGroups[0].GroupName, Tags[?Key=='Name'].Value|[0], LaunchTime]" --filters "Name=instance-state-name, Values=running" --region $region
 done
