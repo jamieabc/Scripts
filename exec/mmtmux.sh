@@ -23,7 +23,7 @@ then
     # tig
     #tmux new-window -t ${SESSION_NAME}:3 -n git 'cd ~/Documents/Project/vpon-dsp; tig'
     tmux new-window -t ${SESSION_NAME}:3 -n git
-    tmux new-window -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp; tig' C-m
+    tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp; tig' C-m
 
     # display mytop & iostat of server 156
     #tmux new-window -t ${SESSION_NAME}:2 -n 56 'mytop -s 1 --noi --noheader -h 192.168.101.156 -u admin -p s123456'
