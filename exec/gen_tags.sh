@@ -51,7 +51,7 @@ if [ "$1" == "e" ]; then
     #gtags -f gtags.files
     if [ ! -f GTAGS ]; then
         #gtags --gtagsconf ~/.emacs.d/gtags.conf
-        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.tmpl" -o -name "*.rb" -o -name "*.rspec" -o -name "*.yml" -o -name "*.c" -o -name "*.h" -o -name "*.cpp" | grep -vE '(node_modules|build|-min.js$|.min.js$|__site_|.git)' > gtags.files
+        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.tmpl" -o -name "*.rb" -o -name "*.rspec" -o -name "*.yml" -o -name "*.c" -o -name "*.h" -o -name "*.cpp" | grep -vE '(node_modules|build|-min.js$|.min.js$|__site_|.git|.json)' > gtags.files
         gtags -f gtags.files
     else
         #gtags -i --gtagsconf ~/.emacs.d/gtags.conf
