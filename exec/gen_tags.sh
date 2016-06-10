@@ -51,7 +51,7 @@ if [ "$1" == "e" ]; then
     #gtags -f gtags.files
     if [ ! -f GTAGS ]; then
         #gtags --gtagsconf ~/.emacs.d/gtags.conf
-        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.html" -o -name "*.tmpl" -o -name "*.json" -o -name "*.rb" -o -name "*.c" -o -name "*.h" -o -name "*.cpp" | grep -vE '(node_modules|buld|.min.js$|__site_|.git)' > gtags.files
+        find . -type f -name "*.js" -o -name "*.jsx" -o -name "*.tmpl" -o -name "*.rb" -o -name "*.rspec" -o -name "*.yml" -o -name "*.c" -o -name "*.h" -o -name "*.cpp" | grep -vE '(node_modules|build|-min.js$|.min.js$|__site_|.git)' > gtags.files
         gtags -f gtags.files
     else
         #gtags -i --gtagsconf ~/.emacs.d/gtags.conf
@@ -60,18 +60,12 @@ if [ "$1" == "e" ]; then
     #htags --suggest
 
 elif [ "$1" == "c" ]; then
-    if [ ! -f tags ]; then
-        #ctags -R --sort=yes --c++-kinds=+px --fields=+faiKlSzm --extra=+q *
-        echo "ctags exist"
-    else
-        #ctags -a -f tags -R --sort=yes --c++-kinds=+px --fields=+faiKlSzm --extra=+q *
-        echo "ctags not exist"
-    fi
+    ctags -R -e --sort=yes --c++-kinds=+px --fields=+faiKlSzm --extra=+q --exclude='*node_modules*' --exclude='bundle.js' --exclude=locales --exclude='*/build/*' --exclude=.git --exclude='*.min.js' --exclude='*.html' --exclude='-min.js' *
 
     # lookupfile
     #echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
     #find -L $PWD -not -regex '.*\.\(png\|gif\)' ! \( -name "*.swp" -o -name "*.cmd" -o -name "*.o" -o -path "*.repo*" -o -name "*.jar" -o -name "*.so" -o -path "*.svn*" -o -path "*.git*" -o -path "out_qisda_usb_wifi" \) -type f -printf "%f\t%p\t1\n" | sort -f >> filenametags
-    ctags -R -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --links=yes --sort=foldcase --c++-kinds=+p --c-kinds=+p --fields=+iaS --extra=+q --exclude=.git/
+    # ctags -R -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --links=yes --sort=foldcase --c++-kinds=+p --c-kinds=+p --fields=+iaS --extra=+q --exclude=.git/
 
 elif [ "$1" == "s" ]; then
     find . -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.cc" -o -name "*.java" -o "*.js" -not -path "*/build/*" -not -path "*/node_modules/*" > cscope.files
