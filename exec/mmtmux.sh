@@ -25,11 +25,9 @@ then
     tmux new-window -t ${SESSION_NAME}:3 -n git
     tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp; tig' C-m
 
-    # display mytop & iostat of server 156
-    #tmux new-window -t ${SESSION_NAME}:2 -n 56 'mytop -s 1 --noi --noheader -h 192.168.101.156 -u admin -p s123456'
-    #tmux select-window -t ${SESSION_NAME}:2
-    #tmux selectp -t 0
-    #tmux split -v -p 50 'ssh aaron.chang@192.168.101.156 -t "iostat -x 1"'
+    # idp
+    tmux new-window -t ${SESSION_NAME}:4 -n idp
+    tmux send-keys -t ${SESSION_NAME}:4 'cd ~/Documents/Project/vpon-idp; rails s -p3001' C-m
 
     tmux select-window -t ${SESSION_NAME}:2
 fi
