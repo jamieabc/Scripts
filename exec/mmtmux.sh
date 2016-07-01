@@ -14,8 +14,8 @@ then
     # start rails server in zeus on port 3000 @ vpon-dsp
     #tmux new-window -t ${SESSION_NAME}:1 -n Rails 'cd ~/Documents/Project/vpon-dsp; sleep 5; zeus server'
     tmux new-window -t ${SESSION_NAME}:1 -n Rails
-    tmux send-keys -t ${SESSION_NAME}:1 'cd ~/Documents/Project/vpon-dsp; sleep 3' C-m
-    tmux send-keys -t ${SESSION_NAME}:1 'spring stop; zeus server' C-m
+    tmux send-keys -t ${SESSION_NAME}:1 'cd ~/Documents/Project/vpon-dsp' C-m
+    tmux send-keys -t ${SESSION_NAME}:1 'spring stop; sleep 1; zeus server' C-m
 
     # run npm watch
     #tmux new-window -t ${SESSION_NAME}:2 -n npm-watch 'cd ~/Documents/Project/vpon-dsp/public/app/flux; npm run build:watch'
