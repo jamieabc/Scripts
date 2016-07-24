@@ -9,7 +9,7 @@ fi
 
 backup=.emacs.d-backup
 link=.emacs.d
-volatile=/Volumnes/RamDisk/.emacs.d-$USER
+volatile=/Volumes/RamDisk/.emacs.d-$USER
 
 if [ "$1" == "start" ];then
     IFS=
