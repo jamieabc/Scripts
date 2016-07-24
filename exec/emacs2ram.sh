@@ -2,8 +2,8 @@
 
 if [ -z "$1" ];then
     echo "Usage:"
-    echo "  emacs2ram.sh start"
-    echo "  emacs2ram.sh restore"
+    echo "  emacs2ram.sh start or emacs2ram.sh s"
+    echo "  emacs2ram.sh restore or emacs2ram.sh r"
     exit 1
 fi
 
@@ -16,7 +16,7 @@ backup=.emacs.d-backup
 link=.emacs.d
 volatile=/Volumes/RamDisk/.emacs.d-$USER
 
-if [ "$1" == "start" ];then
+if [ "$1" == "start" || "$1" == "s" ];then
     IFS=
     set -efu
 

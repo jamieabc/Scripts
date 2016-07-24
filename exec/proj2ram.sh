@@ -3,7 +3,7 @@
 if [ -z "$1" ];then
     echo "Usage:"
     echo "  proj2ram proj-name"
-    echo "  proj2ram restore proj-name"
+    echo "  proj2ram restore proj-name or proj2ram r proj-name"
     exit 1
 fi
 
@@ -14,7 +14,7 @@ fi
 
 PROJ_PATH=~/Documents/Project
 
-if [ "$1" != "restore" ];then
+if [ "$1" != "restore" && "$1" != "r" ];then
     backup=$1-backup
     link=$1
     volatile=/Volumes/RamDisk/$1-$USER
