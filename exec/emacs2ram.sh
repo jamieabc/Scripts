@@ -7,6 +7,11 @@ if [ -z "$1" ];then
     exit 1
 fi
 
+if [ ! -d /Volumes/RamDisk ]; then
+    echo "RamDisk no exist"
+    exit 1
+fi
+
 backup=.emacs.d-backup
 link=.emacs.d
 volatile=/Volumes/RamDisk/.emacs.d-$USER

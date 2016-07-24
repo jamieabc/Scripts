@@ -7,6 +7,11 @@ if [ -z "$1" ];then
     exit 1
 fi
 
+if [ ! -d /Volumes/RamDisk ]; then
+    echo "RamDisk not exist"
+    exit 1
+fi
+
 PROJ_PATH=~/Documents/Project
 
 if [ "$1" != "restore" ];then
