@@ -14,7 +14,7 @@ fi
 
 PROJ_PATH=~/Documents/Project
 
-if [ "$1" != "restore" && "$1" != "r" ];then
+if [ "$1" != "restore" ] && [ "$1" != "r" ];then
     backup=$1-backup
     link=$1
     volatile=/Volumes/RamDisk/$1-$USER

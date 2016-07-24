@@ -16,7 +16,7 @@ backup=.emacs.d-backup
 link=.emacs.d
 volatile=/Volumes/RamDisk/.emacs.d-$USER
 
-if [ "$1" == "start" || "$1" == "s" ];then
+if [ "$1" == "start" ] || [ "$1" == "s" ];then
     IFS=
     set -efu
 
