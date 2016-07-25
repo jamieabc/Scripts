@@ -26,7 +26,7 @@ then
     # guard live reload
     tmux new-window -t ${SESSION_NAME}:3 -n guard
     tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp/' C-m
-    tmux send-keys -t ${SESSION_NAME}:3 'guard' C-m
+    tmux send-keys -t ${SESSION_NAME}:3 'guard -G MyGuardFile' C-m
 
     # tig
     tmux new-window -t ${SESSION_NAME}:4 -n git
