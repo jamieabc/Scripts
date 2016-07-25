@@ -23,16 +23,20 @@ then
     tmux send-keys -t ${SESSION_NAME}:2 'cd ~/Documents/Project/vpon-dsp/public/app/flux' C-m
     tmux send-keys -t ${SESSION_NAME}:2 'npm run build:watch' C-m
 
+    # guard live reload
+    tmux new-window -t ${SESSION_NAME}:3 -n guard
+    tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp/' C-m
+    tmux send-keys -t ${SESSION_NAME}:3 'guard' C-m
+
     # tig
-    #tmux new-window -t ${SESSION_NAME}:3 -n git 'cd ~/Documents/Project/vpon-dsp; tig'
-    tmux new-window -t ${SESSION_NAME}:3 -n git
-    tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-dsp' C-m
-    tmux send-keys -t ${SESSION_NAME}:3 'tig' C-m
+    tmux new-window -t ${SESSION_NAME}:4 -n git
+    tmux send-keys -t ${SESSION_NAME}:4 'cd ~/Documents/Project/vpon-dsp' C-m
+    tmux send-keys -t ${SESSION_NAME}:4 'tig' C-m
 
     # idp
-    tmux new-window -t ${SESSION_NAME}:4 -n idp
-    tmux send-keys -t ${SESSION_NAME}:4 'cd ~/Documents/Project/vpon-idp' C-m
-    tmux send-keys -t ${SESSION_NAME}:4 'spring stop; rails s -p3001' C-m
+    tmux new-window -t ${SESSION_NAME}:5 -n idp
+    tmux send-keys -t ${SESSION_NAME}:5 'cd ~/Documents/Project/vpon-idp' C-m
+    tmux send-keys -t ${SESSION_NAME}:5 'spring stop; rails s -p3001' C-m
 
 
     tmux select-window -t ${SESSION_NAME}:2
