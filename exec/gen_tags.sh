@@ -22,8 +22,8 @@ if [ "$2" == "1" ]; then
         rm gtags.files
 
     elif [ "$1" == "c" ]; then
-        if [ -f tags ]; then
-            rm tags
+        if [ -f TAGS ]; then
+            rm TAGS
         fi
 
     elif [ "$1" == "s" ]; then
@@ -60,7 +60,8 @@ if [ "$1" == "e" ]; then
     #htags --suggest
 
 elif [ "$1" == "c" ]; then
-    ctags -R -e --sort=yes --c++-kinds=+px --fields=+faiKlSzm --extra=+q --exclude='*node_modules*' --exclude='bundle.js' --exclude=locales --exclude='*/build/*' --exclude=.git --exclude='*.min.js' --exclude='*.html' --exclude='-min.js' *
+    #ctags -R -e --sort=yes --c++-kinds=+px --fields=+faiKlSzm --extra=+q --exclude='*node_modules*' --exclude='bundle.js' --exclude=locales --exclude='*/build/*' --exclude=.git --exclude='*.min.js' --exclude='*.html' --exclude='-min.js' *
+    find -L $PWD -type f -not -iwholename '*TAGS' -not -size +16k ! \( -name "*.json" -o -name "*.gem" -o -name "*.html" -o -path "*.git*" -o -path "*node_modules" -o -name "bundle.js" -o -name "*.cache" -o -name "*.log" \) | ctags -f TAGS -e -L -
 
     # lookupfile
     #echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
