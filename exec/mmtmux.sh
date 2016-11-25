@@ -29,9 +29,9 @@ then
     #tmux send-keys -t ${SESSION_NAME}:3 'tig' C-m
 
     # idp
-    tmux new-window -t ${SESSION_NAME}:3 -n idp
-    tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-idp' C-m
-    tmux send-keys -t ${SESSION_NAME}:3 'spring stop; rails s -p3001' C-m
+    #tmux new-window -t ${SESSION_NAME}:3 -n idp
+    #tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-idp' C-m
+    #tmux send-keys -t ${SESSION_NAME}:3 'spring stop; rails s -p3001' C-m
 
 
     tmux select-window -t ${SESSION_NAME}:2
