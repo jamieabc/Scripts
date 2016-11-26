@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+// lists system free memory from system command vm_stat
+const exec = require('child_process').exec;
+const command = 'vm_stat';
+
+// convert memory size in Bytes to MB
+const convertToMemMB = (str, pageSizeKB) => (parseInt(str, 10) * pageSizeKB / 1024).toString().split('.')[0];
+
+exec(command, (error, stdout, stderr) => {
+  if (error) {
+    console.log(`exec command ${command} error`);
+    return;
+  }
+  const lines = stdout.split('\n');
+  const pageSizeKB = parseInt(/\d+/ig.exec(lines[0])[0]) / 1024;
+  const freeMem = convertToMemMB(/\d+/ig.exec(lines[1])[0], pageSizeKB);
+  const activeMem = convertToMemMB(/\d+/ig.exec(lines[2])[0], pageSizeKB);
+  const inactiveMem = convertToMemMB(/\d+/ig.exec(lines[3])[0], pageSizeKB);
+  console.log(`Free(MB)\tActive(MB)\tInactive(MB)`);
+  console.log(`${freeMem}\t\t${activeMem}\t\t${inactiveMem}\t`);
+  // console.log(`free memory: ${freeMem} MB`);
+  // console.log(`active memory: ${activeMem} MB`);
+  // console.log(`inactive memory: ${inactiveMem} MB`);
+})
