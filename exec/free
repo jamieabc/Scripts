@@ -1,11 +1,16 @@
 #!/usr/bin/env node
+'use strict';
 
 // lists system free memory from system command vm_stat
 const exec = require('child_process').exec;
 const command = 'vm_stat';
+const intRegExp = /\d+/ig;
 
 // convert memory size in Bytes to MB
 const convertToMemMB = (str, pageSizeKB) => (parseInt(str, 10) * pageSizeKB / 1024).toString().split('.')[0];
+
+// print result with key-value pair
+const printLine = (key, obj) => console.log(`${key}: ${obj[key]} MB`);
 
 exec(command, (error, stdout, stderr) => {
   if (error) {
@@ -13,13 +18,18 @@ exec(command, (error, stdout, stderr) => {
     return;
   }
   const lines = stdout.split('\n');
-  const pageSizeKB = parseInt(/\d+/ig.exec(lines[0])[0]) / 1024;
-  const freeMem = convertToMemMB(/\d+/ig.exec(lines[1])[0], pageSizeKB);
-  const activeMem = convertToMemMB(/\d+/ig.exec(lines[2])[0], pageSizeKB);
-  const inactiveMem = convertToMemMB(/\d+/ig.exec(lines[3])[0], pageSizeKB);
-  console.log(`Free(MB)\tActive(MB)\tInactive(MB)`);
-  console.log(`${freeMem}\t\t${activeMem}\t\t${inactiveMem}\t`);
-  // console.log(`free memory: ${freeMem} MB`);
-  // console.log(`active memory: ${activeMem} MB`);
-  // console.log(`inactive memory: ${inactiveMem} MB`);
+  const pageSizeKB = parseInt(intRegExp.exec(lines[0])[0]) / 1024;
+  const linesWithValue = lines.filter((value, idx) => idx > 0);
+  const obj = {};
+  linesWithValue.filter((value) => value.length && value.includes('Pages')).forEach((line, idx) => {
+    const tmp = line.split(':');
+    const key = tmp[0].replace(/Pages/, 'Memory');
+
+    // TODO: find out why global object intRegExp is not passed in
+    const intRegExp = /\d+/ig;
+    const value = convertToMemMB(intRegExp.exec(tmp[1]), pageSizeKB);
+    obj[key] = value;
+  });
+
+  Object.keys(obj).forEach((key) => printLine(key, obj));
 })
