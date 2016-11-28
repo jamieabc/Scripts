@@ -21,7 +21,7 @@ then
     #tmux new-window -t ${SESSION_NAME}:2 -n npm-watch 'cd ~/Documents/Project/vpon-dsp/public/app/flux; npm run build:watch'
     tmux new-window -t ${SESSION_NAME}:2 -n npm-watch
     tmux send-keys -t ${SESSION_NAME}:2 'cd ~/Documents/Project/vpon-dsp/public/app/flux' C-m
-    #tmux send-keys -t ${SESSION_NAME}:2 'npm run build:watch' C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'npm run build:watch' C-m
 
     # tig
     #tmux new-window -t ${SESSION_NAME}:3 -n git
