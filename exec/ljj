@@ -1,9 +1,10 @@
 #!/usr/bin/env node
+
 // list all dsl jobs that is currently fail
 var request = require('request');
+var async = require('async');
 
-var user = 'devadm';
-var password = 'just4devadm';
+// server information
 var serverUrl = 'http://192.168.101.170:8080/';
 var job = 'job/vpon-dsp-web/job/dsp-web-all/';
 var api = 'api/json?pretty=true';
@@ -11,11 +12,17 @@ var api = 'api/json?pretty=true';
 request(serverUrl + job + api, (error, response, body) => {
   const result = JSON.parse(body);
   const jobs = result.jobs;
+  var calls = [];
+
   jobs.filter((obj) => obj.color === 'blue').forEach((obj) => {
-    const url = obj.url;
-    const jobName = decodeURIComponent(obj.name);
-    request(obj.url + api, (error, response, body) => {
-      console.log(jobName + ':' + JSON.parse(body).lastSuccessfulBuild.number);
+    const url = obj.url + api;
+    calls.push(() => {
+      request(url, (err ,response, body) => {
+        const data = JSON.parse(body);
+        console.log(data.displayName + ':' + data.lastSuccessfulBuild.number);
+      });
     });
   });
+
+  async.parallel(calls);
 });
