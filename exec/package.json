@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cheerio": "^0.22.0",
     "htmlparser2": "^3.9.0",
+    "node-jquery": "^0.1.0",
+    "parse5": "^2.2.3",
     "request": "^2.67.0",
     "shelljs": "^0.5.3",
     "sync-request": "^2.1.0"
