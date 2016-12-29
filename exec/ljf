@@ -28,4 +28,4 @@ request
   .on('data', (data) => {
     parser.write(data);
     parser.end();
-  })
+  });
