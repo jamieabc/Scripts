@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+const https = require('https');
+const notifier = require('node-notifier');
+const INSTAGRAM = 'https://www.instagram.com/';
+
+if (process.argv.length === 2) {
+  console.log('Please input account name');
+  return;
+}
+
+const ACCOUNT = process.argv[process.argv.length - 1];
+const LINK = INSTAGRAM + ACCOUNT + '/';
+const dateReg = /date.:.(\d+)/g;
+
+https.get(LINK, (res) => {
+  const statusCode = res.statusCode;
+
+  // check return code
+  if (statusCode !== 200) {
+    console.log('Request failed, status code: ' + statusCode);
+    return;
+  }
+
+  res.setEncoding('utf8');
+
+  // parse response data
+  let isDateRetrived = false;
+  res.on('data', (data) => {
+    let result;
+    if ((result = dateReg.exec(data)) !== null && !isDateRetrived) {
+      let latest = new Date(result[1]*1000);
+      let message = 'latest post on: ' + latest;
+      notifier.notify({
+        title: 'Instagram',
+        message: message
+      });
+      isDateRetrived = true;
+      return;
+    }
+  });
+});
