@@ -9,6 +9,7 @@ if (process.argv.length === 2) {
 }
 
 const ACCOUNT = process.argv[process.argv.length - 1];
+const AccAbbrev = ACCOUNT.slice(0, 3);
 const LINK = INSTAGRAM + ACCOUNT + '/';
 const dateReg = /date.:.(\d+)/g;
 
@@ -29,7 +30,7 @@ https.get(LINK, (res) => {
     let result;
     if ((result = dateReg.exec(data)) !== null && !isDateRetrived) {
       let latest = new Date(result[1]*1000);
-      let message = 'latest post on: ' + latest;
+      let message = AccAbbrev + ': ' + latest;
       notifier.notify({
         title: 'Instagram',
         message: message
