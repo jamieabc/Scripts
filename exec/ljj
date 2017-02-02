@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// list all dsl jobs that is currently fail
+// list all successful jenkins job
 var request = require('request');
 var async = require('async');
 
