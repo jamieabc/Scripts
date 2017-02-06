@@ -32,7 +32,7 @@ https.get(LINK, (res) => {
       let latest = new Date(result[1]*1000);
       let message = AccAbbrev + ': ' + latest;
       notifier.notify({
-        title: 'Instagram',
+        title: 'Inst',
         message: message
       });
       isDateRetrived = true;
