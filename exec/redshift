@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+const AWS = require('aws-sdk');
+const redshift = new AWS.Redshift();
+
+require('shelljs/global');
+
+config.silent = true;
+
+// check input argument count
+if (process.argv.length < 3) {
+  console.log('Usage: redshift <operation>');
+  console.log('operation: start / stop');
+  return;
+}
+
+// check argument value
+if (!['start', 'stop'].includes(process.argv[2])) {
+  console.log('please be aware available operations are: start / stop');
+  return;
+}
+
+var op = process.argv[2];
+const cmds = {};
+
+var generateCmds = (name) => {
+  const snapshot = name + '-snapshot';
+  cmds[name] ={
+    start: `aws redshift restore-from-cluster-snapshot --cluster-identifier ${name} --snapshot-identifier ${snapshot}`,
+    stop: `aws redshift delete-cluster --cluster-identifier ${name} --final-cluster-snapshot-identifier ${snapshot}`,
+    del: `aws redshift delete-cluster-snapshot --snapshot-identifier ${snapshot}`
+  };
+};
+
+const lists = ['aaron-redshift', 'dsp-redshift-dev'];
+
+lists.forEach((name) => {
+  generateCmds(name);
+});
+
+switch(op) {
+case 'start':
+  Object.keys(cmds).forEach((name) => {
+    exec(cmds[name].start);
+  });
+  break;
+case 'stop':
+  Object.keys(cmds).forEach((name) => {
+    exec(cmds[name].del);
+    exec(cmds[name].stop);
+  });
+  break;
+default:
+  break;
+}
+
+exit;
