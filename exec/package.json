@@ -13,6 +13,7 @@
     "aws-sdk": "^2.34.0",
     "cheerio": "^0.22.0",
     "htmlparser2": "^3.9.0",
+    "node-fetch": "^1.7.0",
     "node-jquery": "^0.1.0",
     "node-notifier": "^5.0.2",
     "parse5": "^2.2.3",
