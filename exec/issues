@@ -7,7 +7,7 @@ const apiKey = 'a94b5d457d5fb86efb6bda9e92f0ac3e6872baee';
 const [node, program, ...issues] = process.argv;
 const issueUrl = id => `${redmineUrl}/issues/${id}.json?key=${apiKey}`;
 const issuesUrl = `${redmineUrl}/issues.json`;
-const template = issue => `${issue.subject} [#${issue.id}] (${redmineUrl}/issues/${issue.id})`;
+const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
 const searchMe = !issues.length;
 
 // copy content to system clipboard
