@@ -36,7 +36,7 @@ if (searchMe) {
       const issues = body.issues;
       const date = new Date();
       const yesterday = generateYesterday(date);
-      results.push(`[my tasks updated on ${yesterday}]`);
+      console.log(`[my tasks updated on ${yesterday}]`);
       const updatedYesterdayIssues = issues.filter(issue => issue.updated_on.includes(yesterday));
       updatedYesterdayIssues.forEach(issue => results.push('  ' + template(issue)));
     })
@@ -57,7 +57,7 @@ if (searchMe) {
 
   Promise.all(calls)
     .then(body => {
-      results.push('[issues]');
+      console.log('[issues]');
       body.forEach(issue => {
         const content = template(issue);
         const line = '   ' + content;
