@@ -57,11 +57,9 @@ if (searchMe) {
 
   Promise.all(calls)
     .then(body => {
-      console.log('[issues]');
+      console.log('[issues]\n');
       body.forEach(issue => {
-        const content = template(issue);
-        const line = '   ' + content;
-        results.push(line);
+        results.push(template(issue));
       });
     })
     .then(() => {
