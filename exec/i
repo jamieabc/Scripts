@@ -4,10 +4,24 @@ const fetch = require('node-fetch');
 
 const redmineUrl = 'http://192.168.100.12';
 const apiKey = 'a94b5d457d5fb86efb6bda9e92f0ac3e6872baee';
-const [node, program, ...issues] = process.argv;
+const [node, program, ...parameters] = process.argv;
+// const params = Array.prototype.slice.call(parameters);
 const issueUrl = id => `${redmineUrl}/issues/${id}.json?key=${apiKey}`;
 const issuesUrl = `${redmineUrl}/issues.json`;
 const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
+const branchTemplate = issue => `d/${issue.id}-` + issue.subject.replace(/\[(.*)\]/, (match, p1) => p1).split(' ').join('-');
+
+const opts = [];
+const issues = [];
+
+parameters.forEach(str => {
+  if (str[0] === '-') {
+    opts.push(str.replace('-', ''));
+  } else {
+    issues.push(str);
+  }
+});
+
 const searchMe = !issues.length;
 
 // copy content to system clipboard
@@ -58,8 +72,9 @@ if (searchMe) {
   Promise.all(calls)
     .then(body => {
       console.log('[issues]\n');
+      const templateFunc = opts.indexOf('b') === -1 ? template : branchTemplate;
       body.forEach(issue => {
-        results.push(template(issue));
+        results.push(templateFunc(issue));
       });
     })
     .then(() => {
