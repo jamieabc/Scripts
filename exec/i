@@ -1,0 +1,85 @@
+#!/usr/bin/env node
+
+const fetch = require('node-fetch');
+
+const redmineUrl = 'http://192.168.100.12';
+const apiKey = 'a94b5d457d5fb86efb6bda9e92f0ac3e6872baee';
+const [node, program, ...parameters] = process.argv;
+// const params = Array.prototype.slice.call(parameters);
+const issueUrl = id => `${redmineUrl}/issues/${id}.json?key=${apiKey}`;
+const issuesUrl = `${redmineUrl}/issues.json`;
+const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
+const branchTemplate = issue => `d/${issue.id}-` + issue.subject.replace(/\[(.*)\]/, (match, p1) => p1).split(' ').join('-');
+
+const opts = [];
+const issues = [];
+
+parameters.forEach(str => {
+  if (str[0] === '-') {
+    opts.push(str.replace('-', ''));
+  } else {
+    issues.push(str);
+  }
+});
+
+const searchMe = !issues.length;
+
+// copy content to system clipboard
+const copyToClipboard = data => {
+  const proc = require('child_process').spawn('pbcopy');
+  proc.stdin.write(data);
+  proc.stdin.end();
+};
+
+const results = [];
+
+if (searchMe) {
+  // list my tasks
+  const query = `?key=${apiKey}&assigned_to_id=me&sort=updated_on:desc&limit=25&status_id=*`;
+  
+  const generateYesterday = date => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate() - 1;
+    return `${year}-${month <= 9 ? '0' + month : month}-${day <=9 ? '0' + day : day}`;
+  };
+  
+  fetch(`${issuesUrl}${query}`)
+    .then(response => response.json())
+    .then(body => {
+      const issues = body.issues;
+      const date = new Date();
+      const yesterday = generateYesterday(date);
+      console.log(`[my tasks updated on ${yesterday}]\n`);
+      const updatedYesterdayIssues = issues.filter(issue => issue.updated_on.includes(yesterday));
+      updatedYesterdayIssues.forEach(issue => results.push('  ' + template(issue)));
+    })
+    .then(() => {
+      const text = results.join('\n');
+      console.log(text);
+      copyToClipboard(text);
+    });
+} else {
+  // list specified issues
+  var calls = [];
+
+  issues.forEach(id => calls.push(
+    fetch(issueUrl(id))
+      .then(response => response.json())
+      .then(body => body.issue))
+  );
+
+  Promise.all(calls)
+    .then(body => {
+      console.log('[issues]\n');
+      const templateFunc = opts.indexOf('b') === -1 ? template : branchTemplate;
+      body.forEach(issue => {
+        results.push(templateFunc(issue));
+      });
+    })
+    .then(() => {
+      const text = results.join('\n');
+      console.log(text);
+      copyToClipboard(text);
+    });
+}

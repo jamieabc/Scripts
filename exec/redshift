@@ -9,8 +9,7 @@ config.silent = true;
 
 // check input argument count
 if (process.argv.length < 3) {
-  console.log('Usage: redshift <operation>');
-  console.log('operation: start / stop');
+  console.log(exec('aws redshift describe-clusters').output);
   return;
 }
 
