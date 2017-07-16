@@ -9,7 +9,12 @@ const [node, program, ...parameters] = process.argv;
 const issueUrl = id => `${redmineUrl}/issues/${id}.json?key=${apiKey}`;
 const issuesUrl = `${redmineUrl}/issues.json`;
 const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
-const branchTemplate = issue => `d/${issue.id}-` + issue.subject.replace(/\[(.*)\]/, (match, p1) => p1).split(' ').join('-');
+const branchTemplate = issue => `d/${issue.id}-` +
+      issue.subject.replace(/\[(.*)\]/, (match, p1) => p1)
+      .replace(/[\,\&\.\"]/g, '')   // remove special characters
+      .replace(/\s+/g, ' ')     // remove consecutive spaces
+      .split(' ').join('-')
+      .toLowerCase();
 
 const opts = [];
 const issues = [];
@@ -36,20 +41,20 @@ const results = [];
 if (searchMe) {
   // list my tasks
   const query = `?key=${apiKey}&assigned_to_id=me&sort=updated_on:desc&limit=25&status_id=*`;
-  
+
   const generateYesterday = date => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate() - 1;
     return `${year}-${month <= 9 ? '0' + month : month}-${day <=9 ? '0' + day : day}`;
   };
-  
+
   fetch(`${issuesUrl}${query}`)
     .then(response => response.json())
     .then(body => {
       const issues = body.issues;
-      const date = new Date();
-      const yesterday = generateYesterday(date);
+      const now = new Date();
+      const yesterday = generateYesterday(now);
       console.log(`[my tasks updated on ${yesterday}]\n`);
       const updatedYesterdayIssues = issues.filter(issue => issue.updated_on.includes(yesterday));
       updatedYesterdayIssues.forEach(issue => results.push('  ' + template(issue)));
@@ -81,5 +86,8 @@ if (searchMe) {
       const text = results.join('\n');
       console.log(text);
       copyToClipboard(text);
+    })
+    .catch((err) => {
+      console.log('error: ', err);
     });
 }

@@ -14,10 +14,10 @@ fi
 
 PROJ_PATH=~/Documents/Project
 
-if [ "$1" != "restore" ] && [ "$1" != "r" ];then
-    backup=$1-backup
-    link=$1
-    volatile=/Volumes/RamDisk/$1-$USER
+if [ "$1" == "start" ] || [ "$1" == "s" ];then
+    backup=$2-backup
+    link=$2
+    volatile=/Volumes/RamDisk/$2-$USER
 
     IFS=
     set -efu
@@ -37,11 +37,11 @@ if [ "$1" != "restore" ] && [ "$1" != "r" ];then
     fi
 
     if [ -e $link/.unpacked ]; then
-        echo "Sync project from memory to backup ..."
+        echo "Sync project $2 from memory to backup ..."
         rsync -avq --delete --exclude .unpacked ./$link/ ./$backup/
         echo "DONE!"
     else
-        echo "Sync project from disk to memory ..."
+        echo "Sync project $2 from disk to memory ..."
         rsync -avq ./$backup/ ./$link/
         touch $link/.unpacked
         echo "DONE!"
