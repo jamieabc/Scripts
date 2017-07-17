@@ -11,7 +11,7 @@ const issuesUrl = `${redmineUrl}/issues.json`;
 const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
 const branchTemplate = issue => `d/${issue.id}-` +
       issue.subject.replace(/\[(.*)\]/, (match, p1) => p1)
-      .replace(/[\,\&\.\"]/g, '')   // remove special characters
+      .replace(/[\,\&\.\"\>\']/g, '')   // remove special characters
       .replace(/\s+/g, ' ')     // remove consecutive spaces
       .split(' ').join('-')
       .toLowerCase();
