@@ -32,7 +32,6 @@ var generateCmds = (name) => {
 };
 
  const lists = ['aaron-redshift', 'dsp-redshift-dev'];
-//const lists = ['aaron-redshift'];
 
 lists.forEach((name) => {
   generateCmds(name);
