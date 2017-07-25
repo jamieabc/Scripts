@@ -11,7 +11,7 @@ const issuesUrl = `${redmineUrl}/issues.json`;
 const template = issue => `${issue.subject} [#${issue.id}](${redmineUrl}/issues/${issue.id})`;
 const branchTemplate = issue => `d/${issue.id}-` +
       issue.subject.replace(/\[(.*)\]/, (match, p1) => p1)
-      .replace(/[\,\&\.\"\>\']/g, '')   // remove special characters
+      .replace(/[\,\&\.\"\>\'\(\)]/g, '')   // remove special characters
       .replace(/\s+/g, ' ')     // remove consecutive spaces
       .split(' ').join('-')
       .toLowerCase();
@@ -36,6 +36,13 @@ const copyToClipboard = data => {
   proc.stdin.end();
 };
 
+// if b option is on (branch), not to show, only copy
+const log = text => {
+  if (opts.indexOf('b') !== -1) {
+    console.log(text);
+  }
+};
+
 const results = [];
 
 if (searchMe) {
@@ -55,13 +62,13 @@ if (searchMe) {
       const issues = body.issues;
       const now = new Date();
       const yesterday = generateYesterday(now);
-      console.log(`[my tasks updated on ${yesterday}]\n`);
+      log(`[my tasks updated on ${yesterday}]\n`);
       const updatedYesterdayIssues = issues.filter(issue => issue.updated_on.includes(yesterday));
       updatedYesterdayIssues.forEach(issue => results.push('  ' + template(issue)));
     })
     .then(() => {
       const text = results.join('\n');
-      console.log(text);
+      log(text);
       copyToClipboard(text);
     });
 } else {
@@ -76,7 +83,9 @@ if (searchMe) {
 
   Promise.all(calls)
     .then(body => {
-      console.log('[issues]\n');
+      if (opts.indexOf('c') !== -1) {
+        log('[issues]\n');
+      }
       const templateFunc = opts.indexOf('b') === -1 ? template : branchTemplate;
       body.forEach(issue => {
         results.push(templateFunc(issue));
@@ -84,10 +93,10 @@ if (searchMe) {
     })
     .then(() => {
       const text = results.join('\n');
-      console.log(text);
+      log(text);
       copyToClipboard(text);
     })
     .catch((err) => {
-      console.log('error: ', err);
+      log('error: ', err);
     });
 }
