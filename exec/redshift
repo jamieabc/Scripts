@@ -1,57 +1,79 @@
 #!/usr/bin/env node
 
-const AWS = require('aws-sdk');
-const redshift = new AWS.Redshift();
+const Aws = require('aws-sdk');
+const chalk = require('chalk');
 
-require('shelljs/global');
+const redshift = new Aws.Redshift({ region: 'ap-northeast-1' });
 
-config.silent = true;
+const clusterLists = ['aaron-redshift'];
 
-// check input argument count
-if (process.argv.length < 3) {
-  console.log(exec('aws redshift describe-clusters').output);
-  return;
-}
+const generateSnapshotName = (clusterName) => clusterName + '-snapshot';
+const generateLog = (obj) => console.log
 
-// check argument value
-if (!['start', 'stop'].includes(process.argv[2])) {
-  console.log('please be aware available operations are: start / stop');
-  return;
-}
+redshift.describeClusters({}, (err, data) => {
+  if (err) {
+    console.log(err, err.stack);
+  } else {
+    const clusters = data.Clusters.map(c => ({
+      name: c.ClusterIdentifier,
+      status: c.ClusterStatus
+    }));
+    const illegalClusters = clusters.filter(c => clusterLists.indexOf(c.name) === -1);
 
-var op = process.argv[2];
-const cmds = {};
+    // print illegal clusters
+    if (illegalClusters.length) {
+      console.log('illegal clusters: ');
+      illegalClusters.forEach(c => console.log('\tname: ', chalk.red(c.name)));
+    }
 
-var generateCmds = (name) => {
-  const snapshot = name + '-snapshot';
-  cmds[name] ={
-    start: `aws redshift restore-from-cluster-snapshot --cluster-identifier ${name} --snapshot-identifier ${snapshot}`,
-    stop: `aws redshift delete-cluster --cluster-identifier ${name} --final-cluster-snapshot-identifier ${snapshot}`,
-    del: `aws redshift delete-cluster-snapshot --snapshot-identifier ${snapshot}`
-  };
-};
-
- const lists = ['aaron-redshift', 'dsp-redshift-dev'];
-//const lists = ['aaron-redshift'];
-
-lists.forEach((name) => {
-  generateCmds(name);
+    if (process.argv.length < 3) {
+      // print existing redshift clusters
+      console.log('existing clusters: ');
+      clusters.forEach(c => console.log('\tname: ', chalk.green(c.name),
+                                       ', status: ', c.status));
+    } else {
+      const action = process.argv[2];
+      if (action === 'start') {
+        // start redshift from snapshot
+        console.log('it may take 10 minutes to start redshift cluster...');
+        clusterLists.forEach(c => {
+          redshift.restoreFromClusterSnapshot({
+            ClusterIdentifier: c,
+            SnapshotIdentifier: generateSnapshotName(c)
+          }, (err, data) => {
+            if (err) {
+              console.log(err, err.stack);
+            } else {
+              console.log('starting cluster ', c);
+            }
+          });
+        });
+      } else if (action === 'stop') {
+        // delete previous snpshot and store snaptshot from cluster
+        console.log('it may take 5 - 10 minutest to create snapshot and \
+                     delete redshift cluster...');
+        clusters.forEach(c => {
+          redshift.deleteClusterSnapshot({
+            SnapshotIdentifier: generateSnapshotName(c.name)
+          }, (err, data) => {
+            if (err) {
+              console.log(err, err.stack);
+            } else {
+              redshift.deleteCluster({
+                ClusterIdentifier: c.name,
+                FinalClusterSnapshotIdentifier: generateSnapshotName(c.name),
+                SkipFinalClusterSnapshot: false
+              }, (err, data) => {
+                if (err) {
+                  console.log(err, err.stack);
+                } else {
+                  console.log('delete cluster', chalk.red(c.name));
+                }
+              });
+            }
+          });
+        });
+      }
+    }
+  }
 });
-
-switch(op) {
-case 'start':
-  Object.keys(cmds).forEach((name) => {
-    exec(cmds[name].start);
-  });
-  break;
-case 'stop':
-  Object.keys(cmds).forEach((name) => {
-    exec(cmds[name].del);
-    exec(cmds[name].stop);
-  });
-  break;
-default:
-  break;
-}
-
-exit;

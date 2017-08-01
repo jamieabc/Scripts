@@ -51,7 +51,7 @@ else
         echo "Usage:"
         echo "  proj2ram restore proj-name"
     else
-        echo "Moving project back to disk ..."
+        echo "Moving project $2 back to disk ..."
         backup=$2-backup
         link=$2
         volatile=/Volumes/RamDisk/$2-$USER
