@@ -23,7 +23,7 @@ redshift.describeClusters({}, (err, data) => {
 
     // print illegal clusters
     if (illegalClusters.length) {
-      const text = 'Illegal cluster names: ' + illegalClusters.forEach(c => ` ${c.name}`);
+      const text = 'Illegal cluster names: ' + illegalClusters.map(c => c.name).join(' ,');
       spawn('terminal-notifier', ['-message', text]);
     }
 
@@ -53,26 +53,30 @@ redshift.describeClusters({}, (err, data) => {
         // delete previous snpshot and store snaptshot from cluster
         console.log('it may take 5 - 10 minutest to create snapshot and \
                      delete redshift cluster...');
-        clusters.forEach(c => {
-          redshift.deleteClusterSnapshot({
-            SnapshotIdentifier: generateSnapshotName(c.name)
-          }, (err, data) => {
-            if (err) {
-              console.log(err, err.stack);
-            } else {
-              redshift.deleteCluster({
-                ClusterIdentifier: c.name,
-                FinalClusterSnapshotIdentifier: generateSnapshotName(c.name),
-                SkipFinalClusterSnapshot: false
-              }, (err, data) => {
-                if (err) {
-                  console.log(err, err.stack);
-                } else {
-                  console.log('delete cluster', chalk.red(c.name));
-                }
-              });
+        clusters
+          .filter(c => c.status === 'available')
+          .forEach(c => {
+            redshift.deleteClusterSnapshot({
+              SnapshotIdentifier: generateSnapshotName(c.name)
+            }, (err, data) => {
+              if (err && err.code !== 'ClusterSnapshotNotFound') {
+                console.log(err, err.stack);
+              } else {
+              // when no error or snapshot not found, continue to delete redshift cluster
+                redshift.deleteCluster({
+                  ClusterIdentifier: c.name,
+                  FinalClusterSnapshotIdentifier: generateSnapshotName(c.name),
+                  SkipFinalClusterSnapshot: false
+                }, (err, data) => {
+                  if (err) {
+                    console.log(err, err.stack);
+                  } else {
+                    console.log('delete cluster', chalk.red(c.name));
+                  }
+                });
+              }
             }
-          });
+          );
         });
       }
     }
