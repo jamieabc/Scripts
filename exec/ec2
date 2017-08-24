@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+const Aws = require('aws-sdk');
+const chalk = require('chalk');
+const spawn = require('child_process').spawn;
+
+const ec2 = new Aws.EC2({ region: 'ap-northeast-1' });
+
+const whiteLists = [''];
+
+const generateSnapshotName = (clusterName) => clusterName + '-snapshot';
+const generateLog = (obj) => console.log;
+const RUNNING = 'running';
+const params = {
+  Filters: [
+    {
+      Name: 'instance-state-code',
+      Values: ['16']
+    }
+  ]
+};
+
+ec2.describeInstances(params, (err, data) => {
+  if (err) {
+    console.log(err, err.stack);
+  } else {
+    const runningInstances = data.Reservations.reduce((arr, insts) => {
+      return arr.concat(insts.Instances);
+    }, []).map(i => {
+      return {
+        name: i.Tags[0].Value,
+        instId: i.InstanceId
+      };
+    }).filter(i => {
+      return !whiteLists.includes(i.name);
+    }).map(i => i.instId);
+
+    ec2.stopInstances({ InstanceIds: runningInstances }, (err, data) => {
+      if (err) {
+        console.log(err, err.stack);
+      } else {
+        console.log('delete instances: ', runningInstances);
+      }
+    });
+  }
+});
