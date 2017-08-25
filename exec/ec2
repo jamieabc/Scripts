@@ -6,21 +6,59 @@ const spawn = require('child_process').spawn;
 
 const ec2 = new Aws.EC2({ region: 'ap-northeast-1' });
 
-const whiteLists = [''];
+const whiteLists = [
+  /.*j_spark_node.*/,
+  /.*j_deep_spark.*/
+];
 
-const generateSnapshotName = (clusterName) => clusterName + '-snapshot';
-const generateLog = (obj) => console.log;
-const RUNNING = 'running';
-const params = {
+// mapping state into query string
+const MAPPING = {
+  'pending': '0',
+  'running': '16',
+  'shutdown': '32',
+  'terminated': '48',
+  'stopping': '64',
+  'stopped': '80'
+};
+
+if (process.argv.includes('-h')) {
+  console.log('Usage:');
+  console.log(`empty parameters will show currently running instances`);
+  console.log(`${chalk.cyan('-h')} to show help`);
+  console.log(`${chalk.cyan('stop')} to stop running instances not in whitelist`);
+  console.log(`${chalk.cyan('-q')} with following keyword for search criteria:`);
+  console.log(`\t${chalk.green('pending')} to show pending instances`);
+  console.log(`\t${chalk.green('running')} to show running instances`);
+  console.log(`\t${chalk.green('shutdown')} to show shutdown instances`);
+  console.log(`\t${chalk.green('terminated')} to show terminated instances`);
+  console.log(`\t${chalk.green('stopping')} to show stopping instances`);
+  console.log(`\t${chalk.green('stopped')} to show stopped instances`);
+  process.exit();
+}
+
+// custom query with option -q
+const enableCustomQuery = process.argv.includes('-q');
+
+const stateCriteria = () => {
+  let params = ['16'];          // default serach running instances
+  if (enableCustomQuery) {
+    params = process.argv
+      .filter(param => Object.keys(MAPPING).includes(param))
+      .map(param => MAPPING[param]);
+  }
+  return params;
+};
+
+const  searchParams = {
   Filters: [
     {
       Name: 'instance-state-code',
-      Values: ['16']
+      Values: stateCriteria()
     }
   ]
 };
 
-ec2.describeInstances(params, (err, data) => {
+ec2.describeInstances(searchParams, (err, data) => {
   if (err) {
     console.log(err, err.stack);
   } else {
@@ -28,19 +66,44 @@ ec2.describeInstances(params, (err, data) => {
       return arr.concat(insts.Instances);
     }, []).map(i => {
       return {
-        name: i.Tags[0].Value,
+        name: i.Tags.filter(obj => obj.Key === 'Name')[0].Value,
         instId: i.InstanceId
       };
-    }).filter(i => {
-      return !whiteLists.includes(i.name);
-    }).map(i => i.instId);
-
-    ec2.stopInstances({ InstanceIds: runningInstances }, (err, data) => {
-      if (err) {
-        console.log(err, err.stack);
-      } else {
-        console.log('delete instances: ', runningInstances);
-      }
+    }).map(i => {
+      i.keep = whiteLists.reduce((keepItem, reg) => {
+        return keepItem || reg.test(i.name);
+      }, false);
+      return i;
     });
+
+    console.log(chalk.green('instances:'));
+    console.log(runningInstances.map(i => i.name));
+    console.log(chalk.cyan('whiteLists:'));
+    console.log(whiteLists);
+
+    // without additional command, list all ec2 running instances
+    if (enableCustomQuery || process.argv.length < 3) {
+      return;
+    }
+
+    const enableStopInstances = process.argv.includes('stop');
+    const instancesToStop = runningInstances
+                              .filter(i => !i.keep)
+                              .map(i => i.instId || null);
+
+    if (enableStopInstances && instancesToStop.filter(i => i).length) {
+      ec2.stopInstances({
+        InstanceIds: instancesToStop.map(i => i.instId)
+      }, (err, data) => {
+        if (err) {
+          console.log(err, err.stack);
+        } else {
+          console.log(chalk.red('stopping instances: '));
+          console.log(runningInstances);
+        }
+      });
+    } else {
+      console.log(chalk.red('No instances to stop'));
+    }
   }
 });
