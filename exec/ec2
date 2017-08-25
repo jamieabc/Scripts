@@ -6,12 +6,13 @@ const spawn = require('child_process').spawn;
 
 const ec2 = new Aws.EC2({ region: 'ap-northeast-1' });
 
+// regular expressions
 const whiteLists = [
   /.*j_spark_node.*/,
   /.*j_deep_spark.*/
 ];
 
-// mapping state into query string
+// map state string into id for query
 const MAPPING = {
   'pending': '0',
   'running': '16',
@@ -21,6 +22,7 @@ const MAPPING = {
   'stopped': '80'
 };
 
+// show help information
 if (process.argv.includes('-h')) {
   console.log('Usage:');
   console.log(`empty parameters will show currently running instances`);
@@ -39,6 +41,7 @@ if (process.argv.includes('-h')) {
 // custom query with option -q
 const enableCustomQuery = process.argv.includes('-q');
 
+// generate query of state id
 const stateCriteria = () => {
   let params = ['16'];          // default serach running instances
   if (enableCustomQuery) {
@@ -49,6 +52,7 @@ const stateCriteria = () => {
   return params;
 };
 
+// params for instances searching
 const  searchParams = {
   Filters: [
     {
@@ -76,6 +80,7 @@ ec2.describeInstances(searchParams, (err, data) => {
       return i;
     });
 
+    // print current status
     console.log(chalk.green('instances:'));
     console.log(runningInstances.map(i => i.name));
     console.log(chalk.cyan('whiteLists:'));
