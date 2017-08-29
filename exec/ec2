@@ -98,7 +98,7 @@ ec2.describeInstances(searchParams, (err, data) => {
 
     if (enableStopInstances && instancesToStop.filter(i => i).length) {
       ec2.stopInstances({
-        InstanceIds: instancesToStop.map(i => i.instId)
+        InstanceIds: instancesToStop
       }, (err, data) => {
         if (err) {
           console.log(err, err.stack);
