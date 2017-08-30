@@ -2,7 +2,6 @@
 
 const Aws = require('aws-sdk');
 const chalk = require('chalk');
-const spawn = require('child_process').spawn;
 
 const redshift = new Aws.Redshift({ region: 'ap-northeast-1' });
 
@@ -24,7 +23,7 @@ redshift.describeClusters({}, (err, data) => {
     // print illegal clusters
     if (illegalClusters.length) {
       const text = 'Illegal cluster names: ' + illegalClusters.map(c => c.name).join(' ,');
-      spawn('terminal-notifier', ['-message', text]);
+      console.log(text);
     }
 
     if (process.argv.length < 3) {
