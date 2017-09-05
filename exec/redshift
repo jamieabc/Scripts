@@ -41,7 +41,7 @@ redshift.describeClusters({}, (err, data) => {
             ClusterIdentifier: c,
             SnapshotIdentifier: generateSnapshotName(c)
           }, (err, data) => {
-            if (err) {
+            if (err && err.message !== 'ClusterAlreadyExist') {
               console.log(err, err.stack);
             } else {
               console.log('starting cluster ', c);
