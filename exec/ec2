@@ -9,17 +9,19 @@ const ec2 = new Aws.EC2({ region: 'ap-northeast-1' });
 // regular expressions
 const whiteLists = [
   /.*j_spark_node.*/,
-  /.*j_deep_spark.*/
+  /.*j_deep_spark.*/,
+  /^Kevin.*/,
+  /^Jack.*/
 ];
 
 // map state string into id for query
 const MAPPING = {
-  'pending': '0',
-  'running': '16',
-  'shutdown': '32',
-  'terminated': '48',
-  'stopping': '64',
-  'stopped': '80'
+  pending: '0',
+  running: '16',
+  shutdown: '32',
+  terminated: '48',
+  stopping: '64',
+  stopped: '80'
 };
 
 // show help information
@@ -27,8 +29,12 @@ if (process.argv.includes('-h')) {
   console.log('Usage:');
   console.log(`empty parameters will show currently running instances`);
   console.log(`${chalk.cyan('-h')} to show help`);
-  console.log(`${chalk.cyan('stop')} to stop running instances not in whitelist`);
-  console.log(`${chalk.cyan('-q')} with following keyword for search criteria:`);
+  console.log(
+    `${chalk.cyan('stop')} to stop running instances not in whitelist`
+  );
+  console.log(
+    `${chalk.cyan('-q')} with following keyword for search criteria:`
+  );
   console.log(`\t${chalk.green('pending')} to show pending instances`);
   console.log(`\t${chalk.green('running')} to show running instances`);
   console.log(`\t${chalk.green('shutdown')} to show shutdown instances`);
@@ -43,7 +49,7 @@ const enableCustomQuery = process.argv.includes('-q');
 
 // generate query of state id
 const stateCriteria = () => {
-  let params = ['16'];          // default serach running instances
+  let params = ['16']; // default serach running instances
   if (enableCustomQuery) {
     params = process.argv
       .filter(param => Object.keys(MAPPING).includes(param))
@@ -53,7 +59,7 @@ const stateCriteria = () => {
 };
 
 // params for instances searching
-const  searchParams = {
+const searchParams = {
   Filters: [
     {
       Name: 'instance-state-code',
@@ -66,19 +72,22 @@ ec2.describeInstances(searchParams, (err, data) => {
   if (err) {
     console.log(err, err.stack);
   } else {
-    const runningInstances = data.Reservations.reduce((arr, insts) => {
-      return arr.concat(insts.Instances);
-    }, []).map(i => {
-      return {
-        name: i.Tags.filter(obj => obj.Key === 'Name')[0].Value,
-        instId: i.InstanceId
-      };
-    }).map(i => {
-      i.keep = whiteLists.reduce((keepItem, reg) => {
-        return keepItem || reg.test(i.name);
-      }, false);
-      return i;
-    });
+    const runningInstances = data.Reservations
+      .reduce((arr, insts) => {
+        return arr.concat(insts.Instances);
+      }, [])
+      .map(i => {
+        return {
+          name: i.Tags.filter(obj => obj.Key === 'Name')[0].Value,
+          instId: i.InstanceId
+        };
+      })
+      .map(i => {
+        i.keep = whiteLists.reduce((keepItem, reg) => {
+          return keepItem || reg.test(i.name);
+        }, false);
+        return i;
+      });
 
     // print current status
     console.log(chalk.green('instances:'));
@@ -93,20 +102,23 @@ ec2.describeInstances(searchParams, (err, data) => {
 
     const enableStopInstances = process.argv.includes('stop');
     const instancesToStop = runningInstances
-                              .filter(i => !i.keep)
-                              .map(i => i.instId || null);
+      .filter(i => !i.keep)
+      .map(i => i.instId || null);
 
     if (enableStopInstances && instancesToStop.filter(i => i).length) {
-      ec2.stopInstances({
-        InstanceIds: instancesToStop
-      }, (err, data) => {
-        if (err) {
-          console.log(err, err.stack);
-        } else {
-          console.log(chalk.red('stopping instances: '));
-          console.log(instancesToStop);
+      ec2.stopInstances(
+        {
+          InstanceIds: instancesToStop
+        },
+        (err, data) => {
+          if (err) {
+            console.log(err, err.stack);
+          } else {
+            console.log(chalk.red('stopping instances: '));
+            console.log(instancesToStop);
+          }
         }
-      });
+      );
     } else {
       console.log(chalk.red('No instances to stop'));
     }
