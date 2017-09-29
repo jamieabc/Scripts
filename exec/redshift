@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const redshift = new Aws.Redshift({ region: 'ap-northeast-1' });
 
 const clusterLists = ['aaron-redshift'];
+const clusterAcceptableErrorCode = ['ClusterAlreadyExists', 'ClusterSnapshotNotFound'];
 
 const generateSnapshotName = clusterName => clusterName + '-snapshot';
 const generateLog = obj => console.log;
@@ -18,23 +19,18 @@ redshift.describeClusters({}, (err, data) => {
       name: c.ClusterIdentifier,
       status: c.ClusterStatus
     }));
-    const illegalClusters = clusters.filter(
-      c => clusterLists.indexOf(c.name) === -1
-    );
+    const illegalClusters = clusters.filter(c => clusterLists.indexOf(c.name) === -1);
 
     // print illegal clusters
     if (illegalClusters.length) {
-      const text =
-        'Illegal cluster names: ' + illegalClusters.map(c => c.name).join(' ,');
+      const text = 'Illegal cluster names: ' + illegalClusters.map(c => c.name).join(' ,');
       console.log(text);
     }
 
     if (process.argv.length < 3) {
       // print existing redshift clusters
       console.log('existing clusters: ');
-      clusters.forEach(c =>
-        console.log('\tname: ', chalk.green(c.name), ', status: ', c.status)
-      );
+      clusters.forEach(c => console.log('\tname: ', chalk.green(c.name), ', status: ', c.status));
     } else {
       const action = process.argv[2];
       if (action === 'start') {
@@ -67,16 +63,14 @@ redshift.describeClusters({}, (err, data) => {
               SnapshotIdentifier: generateSnapshotName(c.name)
             },
             (err, data) => {
-              if (err && err.code !== 'ClusterSnapshotNotFound') {
+              if (err && !clusterAcceptableErrorCode.includes(err.code)) {
                 console.log(err, err.stack);
               } else {
                 // when no error or snapshot not found, continue to delete redshift cluster
                 redshift.deleteCluster(
                   {
                     ClusterIdentifier: c.name,
-                    FinalClusterSnapshotIdentifier: generateSnapshotName(
-                      c.name
-                    ),
+                    FinalClusterSnapshotIdentifier: generateSnapshotName(c.name),
                     SkipFinalClusterSnapshot: false
                   },
                   (err, data) => {
