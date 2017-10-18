@@ -9,21 +9,26 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "async": "^2.1.4",
-    "aws-sdk": "^2.34.0",
+    "async": "^2.5.0",
+    "aws-sdk": "^2.125.0",
     "bluebird": "^3.5.0",
-    "chalk": "^2.0.1",
+    "chalk": "^2.1.0",
     "cheerio": "^0.22.0",
     "colors": "^1.1.2",
     "htmlparser2": "^3.9.0",
-    "mysql": "^2.13.0",
-    "node-fetch": "^1.7.0",
+    "jenkins-api": "^0.3.1",
+    "minimist": "^1.2.0",
+    "mysql": "^2.14.1",
+    "node-fetch": "^1.7.3",
     "node-jquery": "^0.1.0",
     "node-notifier": "^5.0.2",
     "parse5": "^2.2.3",
-    "promise-mysql": "^3.0.1",
-    "request": "^2.67.0",
+    "promise-mysql": "^3.1.0",
+    "request": "^2.83.0",
     "shelljs": "^0.5.3",
     "sync-request": "^2.1.0"
+  },
+  "dependencies": {
+    "googleapis": "^22.2.0"
   }
 }
