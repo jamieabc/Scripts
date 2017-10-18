@@ -8,10 +8,12 @@ const ec2 = new Aws.EC2({ region: 'ap-northeast-1' });
 
 // regular expressions
 const whiteLists = [
-  /.*j_spark_node.*/,
-  /.*j_deep_spark.*/,
-  /^Kevin.*/,
-  /^Jack.*/
+  /.*j_spark_node.*/i,
+  /.*j_deep_spark.*/i,
+  /^Kevin.*/i,
+  /^Jack.*/i,
+  /aerospike/i,
+  /ssp_integration_001/i
 ];
 
 // map state string into id for query
@@ -29,12 +31,8 @@ if (process.argv.includes('-h')) {
   console.log('Usage:');
   console.log(`empty parameters will show currently running instances`);
   console.log(`${chalk.cyan('-h')} to show help`);
-  console.log(
-    `${chalk.cyan('stop')} to stop running instances not in whitelist`
-  );
-  console.log(
-    `${chalk.cyan('-q')} with following keyword for search criteria:`
-  );
+  console.log(`${chalk.cyan('stop')} to stop running instances not in whitelist`);
+  console.log(`${chalk.cyan('-q')} with following keyword for search criteria:`);
   console.log(`\t${chalk.green('pending')} to show pending instances`);
   console.log(`\t${chalk.green('running')} to show running instances`);
   console.log(`\t${chalk.green('shutdown')} to show shutdown instances`);
@@ -101,9 +99,7 @@ ec2.describeInstances(searchParams, (err, data) => {
     }
 
     const enableStopInstances = process.argv.includes('stop');
-    const instancesToStop = runningInstances
-      .filter(i => !i.keep)
-      .map(i => i.instId || null);
+    const instancesToStop = runningInstances.filter(i => !i.keep).map(i => i.instId || null);
 
     if (enableStopInstances && instancesToStop.filter(i => i).length) {
       ec2.stopInstances(
