@@ -1,14 +1,6 @@
 #!/usr/bin/env node
 
 let jobName;
-const jobNameIdx = 2;
-
-if (process.argv.length === 3) {
-  jobName = encodeURIComponent(process.argv[jobNameIdx]);
-} else {
-  console.log('Please input job name.');
-  process.exit(-1);
-}
 
 // jenkins STATE mapping
 const STATE = {
@@ -16,14 +8,30 @@ const STATE = {
   fail: 'FAILURE'
 };
 
+const jobNameIdx = process.argv.length - 1;
+
+// return if no any job given
+if (process.argv.length > 2) {
+  jobName = encodeURIComponent(process.argv[jobNameIdx]);
+} else {
+  console.log('Please input job name as the last argument.');
+  process.exit(-1);
+}
+
+const parseArgs = require('minimist');
 const jenkinsApi = require('jenkins-api');
 const jenkins = jenkinsApi.init(
   'http://aaron.chang:e7f027575923246f50066e69410cc766@jenkins.quadas.com'
 );
 
-const root = 'Frontend';
-const category = 'DSP';
-const path = [root, category, jobName].join('/job/');
+const prettyPrint = line => line.split('\n').join('\n');
+
+const argv = parseArgs(process.argv);
+const root = argv.r || 'Frontend';
+const project = argv.p || 'DSP';
+const category = argv.c || null;
+const path = [root, project, , category, jobName].filter(item => item).join('/job/');
+console.log(`path: ${path}\n`);
 
 // http://jenkins.quadas.com/job/Frontend/job/DSP/job/d%252F18887-rails-wrong-primary-key-of-redshift/
 
@@ -34,9 +42,13 @@ jenkins.all_builds(path, (err, data) => {
   }
 
   const lastBuild = data[0];
-  const lastSuccessBuild = data.filter(
-    build => build.result === STATE.success
-  )[0] || { id: null };
+
+  // reutrn if http status code not 2xx
+  if (data.statusCode >= 300) {
+    process.exit(0);
+  }
+
+  const lastSuccessBuild = data.filter(build => build.result === STATE.success)[0] || { id: null };
   const successBuildDifferent = lastBuild.id !== lastSuccessBuild.id;
 
   if (successBuildDifferent) {
@@ -54,10 +66,17 @@ jenkins.all_builds(path, (err, data) => {
 
       if (lastBuild.result === STATE.success) {
         // Untagged: registry.quadas.com:5002/dsp/web-feature/mchang:24\n
-        const dockerReg = /Untagged: (.*)\n/;
-        console.log('\ndocker: ', dockerReg.exec(data.body)[1]);
+        const dockerRegistryReg = /Untagged: (.*)\n/;
+        const registry = dockerRegistryReg.exec(data.body);
+
+        // some builds may not generate docker
+        if (registry) {
+          console.log('\ndocker registry: ', dockerRegistryReg.exec(data.body)[1]);
+        } else {
+          console.log(`\n${path} build #${lastBuild.id} success without docker image generated`);
+        }
       } else if (lastBuild.result === STATE.fail) {
-        console.log(data.body.split('\n').join('\n'));
+        console.log(prettyPrint(data.body));
         console.log(data.body.replace('\n', '\n'));
       }
     });
