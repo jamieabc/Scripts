@@ -27,9 +27,25 @@ const jenkins = jenkinsApi.init(
 const prettyPrint = line => line.split('\n').join('\n');
 
 const argv = parseArgs(process.argv);
-const root = argv.r || 'Frontend';
-const project = argv.p || 'DSP';
-const category = argv.c || null;
+
+let root = argv.r;
+let project = argv.p;
+let category = argv.c;
+
+// assign variables
+if (argv.t === 'dsp') {
+  root = 'Frontend';
+  project = 'DSP';
+} else if (argv.t === 'ssp-api') {
+  root = 'Frontend';
+  project = 'SSP';
+  category = 'web-api';
+} else if (argv.t === 'ssp-ui') {
+  root = 'Frontend';
+  project = 'SSP';
+  category = 'web-ui';
+}
+
 const path = [root, project, , category, jobName].filter(item => item).join('/job/');
 console.log(`path: ${path}\n`);
 
