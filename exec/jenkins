@@ -24,7 +24,7 @@ const jenkins = jenkinsApi.init(
   'http://aaron.chang:e7f027575923246f50066e69410cc766@jenkins.quadas.com'
 );
 
-const prettyPrint = line => line.split('\n').join('\n');
+const formatLine = line => line.split('\n').join('\n');
 
 const argv = parseArgs(process.argv);
 
@@ -83,16 +83,17 @@ jenkins.all_builds(path, (err, data) => {
       if (lastBuild.result === STATE.success) {
         // Untagged: registry.quadas.com:5002/dsp/web-feature/mchang:24\n
         const dockerRegistryReg = /Untagged: (.*)\n/;
+        const pushDockerImage = data.body.includes('Pushed');
         const registry = dockerRegistryReg.exec(data.body);
 
         // some builds may not generate docker
-        if (registry) {
+        if (registry && pushDockerImage) {
           console.log('\ndocker registry: ', dockerRegistryReg.exec(data.body)[1]);
         } else {
           console.log(`\n${path} build #${lastBuild.id} success without docker image generated`);
         }
       } else if (lastBuild.result === STATE.fail) {
-        console.log(prettyPrint(data.body));
+        console.log(formatLine(data.body));
         console.log(data.body.replace('\n', '\n'));
       }
     });
