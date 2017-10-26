@@ -52,50 +52,59 @@ console.log(`path: ${path}\n`);
 // http://jenkins.quadas.com/job/Frontend/job/DSP/job/d%252F18887-rails-wrong-primary-key-of-redshift/
 
 // get all builds of jenkins
-jenkins.all_builds(path, (err, data) => {
-  if (err) {
-    console.log(err, err.stack);
-  }
-
-  const lastBuild = data[0];
-
-  // reutrn if http status code not 2xx
-  if (data.statusCode >= 300) {
-    process.exit(0);
-  }
-
-  const lastSuccessBuild = data.filter(build => build.result === STATE.success)[0] || { id: null };
-  const successBuildDifferent = lastBuild.id !== lastSuccessBuild.id;
-
-  if (successBuildDifferent) {
-    console.log('build ongoing...\n');
-    console.log('last success build id: ', lastSuccessBuild.id);
-  }
-  console.log('\nlast build: ', lastBuild);
-
-  // do somehting if there's any result
-  if (lastBuild.result) {
-    jenkins.console_output(path, lastBuild.id, (err, data) => {
+setInterval(
+  () =>
+    jenkins.all_builds(path, (err, data) => {
       if (err) {
-        console.log(err);
+        console.log(err, err.stack);
       }
 
-      if (lastBuild.result === STATE.success) {
-        // Untagged: registry.quadas.com:5002/dsp/web-feature/mchang:24\n
-        const dockerRegistryReg = /Untagged: (.*)\n/;
-        const pushDockerImage = data.body.includes('Pushed');
-        const registry = dockerRegistryReg.exec(data.body);
+      const lastBuild = data[0];
 
-        // some builds may not generate docker
-        if (registry && pushDockerImage) {
-          console.log('\ndocker registry: ', dockerRegistryReg.exec(data.body)[1]);
-        } else {
-          console.log(`\n${path} build #${lastBuild.id} success without docker image generated`);
-        }
-      } else if (lastBuild.result === STATE.fail) {
-        console.log(formatLine(data.body));
-        console.log(data.body.replace('\n', '\n'));
+      // reutrn if http status code not 2xx
+      if (data.statusCode >= 300) {
+        process.exit(0);
       }
-    });
-  }
-});
+
+      console.log('\n*** start query ***');
+      const lastSuccessBuild = data.filter(build => build.result === STATE.success)[0] || {
+        id: null
+      };
+      const successBuildDifferent = lastBuild.id !== lastSuccessBuild.id;
+
+      if (successBuildDifferent) {
+        console.log('build ongoing...\n');
+        console.log('last success build id: ', lastSuccessBuild.id);
+      }
+      console.log('\nlast build: ', lastBuild);
+
+      // do somehting if there's any result
+      if (lastBuild.result) {
+        jenkins.console_output(path, lastBuild.id, (err, data) => {
+          if (err) {
+            console.log(err);
+          }
+
+          if (lastBuild.result === STATE.success) {
+            // Untagged: registry.quadas.com:5002/dsp/web-feature/mchang:24\n
+            const dockerRegistryReg = /Untagged: (.*)\n/;
+            const pushDockerImage = data.body.includes('Pushed');
+            const registry = dockerRegistryReg.exec(data.body);
+
+            // some builds may not generate docker
+            if (registry && pushDockerImage) {
+              console.log('\ndocker registry: ', dockerRegistryReg.exec(data.body)[1]);
+            } else {
+              console.log(
+                `\n${path} build #${lastBuild.id} success without docker image generated`
+              );
+            }
+          } else if (lastBuild.result === STATE.fail) {
+            console.log(formatLine(data.body));
+            console.log(data.body.replace('\n', '\n'));
+          }
+        });
+      }
+    }),
+  10000
+);
