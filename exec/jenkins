@@ -20,6 +20,7 @@ if (process.argv.length > 2) {
 
 const parseArgs = require('minimist');
 const jenkinsApi = require('jenkins-api');
+const { exec } = require('child_process');
 const jenkins = jenkinsApi.init(
   'http://aaron.chang:e7f027575923246f50066e69410cc766@jenkins.quadas.com'
 );
@@ -94,6 +95,7 @@ setInterval(
             // some builds may not generate docker
             if (registry && pushDockerImage) {
               console.log('\ndocker registry: ', dockerRegistryReg.exec(data.body)[1]);
+              exec("terminal-notifier -message 'push docker success'");
             } else {
               console.log(
                 `\n${path} build #${lastBuild.id} success without docker image generated`
