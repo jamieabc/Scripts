@@ -66,8 +66,8 @@ setInterval(
         process.exit(0);
       }
 
-      console.log('\n*** start query ***');
-      const lastSuccessBuild = data.filter(build => build.result === STATE.success)[0] || {
+      console.log('\n*** start query ***\n');
+      const lastSuccessBuild = (data || []).filter(build => build.result === STATE.success)[0] || {
         id: null
       };
       const successBuildDifferent = lastBuild.id !== lastSuccessBuild.id;
