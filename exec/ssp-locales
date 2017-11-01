@@ -1,8 +1,9 @@
-#!/usr/bin/env node --harmony
+#!/usr/local/bin/node --harmony
 
 const Aws = require('aws-sdk');
 const chalk = require('chalk');
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 const { exec } = require('child_process');
 
 const S3 = new Aws.S3({ region: 'ap-northeast-1' });
@@ -18,8 +19,8 @@ S3.listObjectsV2(Object.assign({}, s3Params, { Prefix: 'locales/ssp' }), (err, d
   if (err) {
     console.log(err, err.stack);
   } else {
-    const params = data.Contents.map(d => Object.assign({}, s3Params, { Key: d.Key }));
-    params.forEach(p =>
+    const contents = data.Contents.map(d => Object.assign({}, s3Params, { Key: d.Key }));
+    contents.forEach(p =>
       S3.getObject(p, (err, data) => {
         if (err) {
           console.log(err, err.stack);
@@ -31,7 +32,7 @@ S3.listObjectsV2(Object.assign({}, s3Params, { Prefix: 'locales/ssp' }), (err, d
 
           // create folder if not exist
           if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirpath);
+            mkdirp.sync(dirPath);
           }
           // open file to write
           fs.open(path, 'w', (err, fd) => {
