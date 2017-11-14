@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+const sh = require('shelljs');
+sh.config.silent = true;
+
+const inDsp = sh.test('-d', 'config');
+
+if (!inDsp) {
+  console.log('Please enter dsp project diredtory.');
+  sh.exit(1);
+}
+
+sh.pushd('config');
+
+const files = sh.ls('settings*.yml').filter(s => !s.includes('example') && !sh.test('-L', s));
+
+const printHelp = files => {
+  if (!files.length) {
+    console.log('No any setting file found, exit!');
+    sh.exit(0);
+  }
+  console.log('Following settings existed:');
+  files.forEach((f, i) => console.log(`${i + 1}. ${f}`));
+  console.log('\nPlease choose one: ');
+};
+
+printHelp(files);
+
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('data', function(input) {
+  if (input < 0 || input > files.length) {
+    printHelp(files);
+  }
+
+  if (sh.test('-L', 'settings.yml')) {
+    sh.rm('settings.yml');
+  } else if (sh.test('-f', 'settings.yml')) {
+    console.log('config/settings.yml already exist, please check again!');
+    sh.exit(1);
+  }
+
+  sh.ln('-s', files[input - 1], 'settings.yml');
+  console.log(`Linking ${files[input - 1]}...`);
+  sh.popd();
+  sh.exit(0);
+});
