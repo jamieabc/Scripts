@@ -61,6 +61,9 @@ setInterval(
       }
 
       const lastBuild = data[0];
+      if (lastBuild) {
+        lastBuild.timestamp = new Date(lastBuild.timestamp).toString();
+      }
 
       // reutrn if http status code not 2xx
       if (data.statusCode >= 300) {
