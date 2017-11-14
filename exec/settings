@@ -24,9 +24,8 @@ const printHelp = files => {
   if (currentSetting.output.includes('No such file')) {
     console.log('No settings.yml\n');
   } else {
-    console.log(
-      `Current link to ${currentSetting.output.replace(/^.* -> (.*)\n$/, (match, p1) => p1)}`
-    );
+    const path = currentSetting.output.replace(/^.* -> (.*)\n$/, (match, p1) => p1);
+    console.log(`Current link to ${path.split('/').slice(-1)[0]}`);
   }
 
   console.log('Following settings existed:');
