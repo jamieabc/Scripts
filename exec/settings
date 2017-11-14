@@ -19,6 +19,17 @@ const printHelp = files => {
     console.log('No any setting file found, exit!');
     sh.exit(0);
   }
+
+  const currentSetting = sh.exec('ls -l settings.yml');
+  if (!currentSetting.output.includes('No such file')) {
+    console.log('currentSetting: ', currentSetting);
+    console.log(
+      `Current link to ${currentSetting.output.replace(/^.* -> (.*)\n$/, (match, p1) => p1)}`
+    );
+  } else {
+    console.log('No settings.yml\n');
+  }
+
   console.log('Following settings existed:');
   files.forEach((f, i) => console.log(`${i + 1}. ${f}`));
   console.log('\nPlease choose one: ');
