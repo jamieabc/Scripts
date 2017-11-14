@@ -21,13 +21,12 @@ const printHelp = files => {
   }
 
   const currentSetting = sh.exec('ls -l settings.yml');
-  if (!currentSetting.output.includes('No such file')) {
-    console.log('currentSetting: ', currentSetting);
+  if (currentSetting.output.includes('No such file')) {
+    console.log('No settings.yml\n');
+  } else {
     console.log(
       `Current link to ${currentSetting.output.replace(/^.* -> (.*)\n$/, (match, p1) => p1)}`
     );
-  } else {
-    console.log('No settings.yml\n');
   }
 
   console.log('Following settings existed:');
