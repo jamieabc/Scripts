@@ -1,4 +1,5 @@
 #!/bin/bash
+exit 0
 SESSION_NAME='work'
 
 tmux start-server
@@ -14,7 +15,7 @@ then
     # dsp js bundle
     tmux new-window -t ${SESSION_NAME}:2 -n dsp-js
     tmux send-keys -t ${SESSION_NAME}:2 'cd ~/Documents/Project/vpon-dsp/public/app/flux' C-m
-    tmux send-keys -t ${SESSION_NAME}:2 'npm run hot' C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'npm run build:watch' C-m
 
     # ssp rails at port 4000
     tmux new-window -t ${SESSION_NAME}:3 -n ssp-rails
