@@ -25,4 +25,4 @@ const operation = process.argv[2];
 shell.exec(`USER=aaron ${syncEmacsCmd} ${operation}`);
 
 // sync projects
-# projList.forEach((p) => shell.exec(`USER=aaron ${syncProjCmd} ${operation} ${p}`));
+// projList.forEach((p) => shell.exec(`USER=aaron ${syncProjCmd} ${operation} ${p}`));
