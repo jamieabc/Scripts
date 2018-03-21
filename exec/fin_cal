@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+const puppeteer = require("puppeteer");
+const { exec } = require("child_process");
+const { existsSync } = require("fs");
+
+const home = process.env["HOME"];
+const tmpDir = `${home}/Downloads/tmp`;
+const fileName = (() => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const day = date.getDay();
+  const year = date.getFullYear();
+  return `fin-cal-${day}-${month}-${year}.png`;
+})();
+const filePath = `${tmpDir}/${fileName}`;
+
+if (existsSync(filePath)) {
+  console.log(`file ${fileName} already exist`);
+  exec("open `{filePath}");
+  exit(0);
+}
+
+const browse = async () => {
+  const host = "www.cnyes.com";
+  const urlPaht = "economy/indicator/EconomicsCalendar/Calendar.aspx";
+  const url = `http://${host}/${urlPaht}`;
+
+  const selector = "div.mgbor > div.tab > table";
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(url);
+
+  const handle = await page.$(selector);
+  await handle.screenshot({ path: filePath });
+  await handle.dispose();
+
+  await browser.close();
+  exec(`open ${filePath}`);
+};
+
+browse();
