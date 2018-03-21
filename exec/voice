@@ -38,6 +38,7 @@ dir_name = 'paragraphs'
 `rm -rf #{dir_name}` if Dir.exist? dir_name
 Dir.mkdir dir_name
 
+# generate voice of whoe document
 unless args.size > 1
   puts 'No paragraphs input, set to whoe text content'
   generate_voice(dir_name, file_name, true)
@@ -61,7 +62,7 @@ end
 paragraphs_index.each_with_index do |loc, idx|
   file_name = "./#{dir_name}/#{paragraphs[idx]}.txt"
   paragraph_end_index = idx < paragraphs_index.size - 1 ? paragraphs_index[idx + 1] : data.bytesize
-  content = data[loc, paragraph_end_index]
+  content = data[loc..paragraph_end_index]
   f = File.open(file_name, 'w')
   f.write content
   f.close
