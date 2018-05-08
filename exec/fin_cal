@@ -2,6 +2,7 @@
 
 const puppeteer = require("puppeteer");
 const { exec } = require("child_process");
+const { exit } = require("process");
 const { existsSync } = require("fs");
 
 const home = process.env["HOME"];
@@ -15,11 +16,31 @@ const fileName = (() => {
 })();
 const filePath = `${tmpDir}/${fileName}`;
 
-if (existsSync(filePath)) {
-  console.log(`file ${fileName} already exist`);
-  exec("open `{filePath}");
-  exit(0);
-}
+// remove previous files
+exec(`ls ${tmpDir}/fin-cal-*.png`, (err, stdout, stderr) => {
+  if (err) {
+    console.log(`error: ${err}`);
+    exit();
+  }
+
+  if (stdout.trim().length !== 0) {
+    const prevFiles = stdout
+      .trim()
+      .split("\n")
+      .filter(file => !file.match(fileName))
+      .join(" ");
+    exec(`rm ${prevFiles}`);
+  }
+
+  // open file if already existed, otherwise create new one
+  if (existsSync(filePath)) {
+    console.log(`file ${fileName} already exist`);
+    exec("open `{filePath}");
+    exit();
+  } else {
+    browse();
+  }
+});
 
 const browse = async () => {
   const host = "www.cnyes.com";
@@ -39,5 +60,3 @@ const browse = async () => {
   await browser.close();
   exec(`open ${filePath}`);
 };
-
-browse();
