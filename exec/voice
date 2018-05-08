@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'pry'
 
 def generate_voice(dir_name, file_name, no_slit = false)
   Dir.chdir dir_name
@@ -56,7 +57,8 @@ paragraphs = ARGF.argv[1, ARGF.argv.size]
 start = data.index(paragraphs.last) + 1
 
 paragraphs_index = paragraphs.map do |p|
-  data[start, data.size].index(p) + start
+  index = data[start, data.size].index(p)
+  index ? index + start : data.size
 end
 
 paragraphs_index.each_with_index do |loc, idx|
