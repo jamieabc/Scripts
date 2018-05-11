@@ -18,21 +18,21 @@ then
 
     # webapp client side
     dir2="webapp-client"
-    tmux new-window -t ${SESSION_NAME}:2 -n $dir2
-    tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir2}" C-m
-    tmux send-keys -t ${SESSION_NAME}:2 'npm run watch:dev' C-m
+    tmux new-window -t ${SESSION_NAME}:1 -n $dir2
+    tmux send-keys -t ${SESSION_NAME}:1 "cd ${PROJECT_PATH}/${dir2}" C-m
+    tmux send-keys -t ${SESSION_NAME}:1 'npm run watch:dev' C-m
 
     # webapp server side
     dir3="webapp"
-    tmux new-window -t ${SESSION_NAME}:3 -n ${dir3}
-    tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir3}" C-m
-    tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
+    tmux new-window -t ${SESSION_NAME}:2 -n ${dir3}
+    tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir3}" C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'go run main.go' C-m
 
     # accoutn server side
     dir4="account"
-    tmux new-window -t ${SESSION_NAME}:4 -n $dir4
-    tmux send-keys -t ${SESSION_NAME}:4 "cd ${PROJECT_PATH}/${dir4}" C-m
-    tmux send-keys -t ${SESSION_NAME}:4 'go run main.go' C-m
+    tmux new-window -t ${SESSION_NAME}:3 -n $dir4
+    tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir4}" C-m
+    tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
 
     # id
     #tmux new-window -t ${SESSION_NAME}:3 -n idp
