@@ -1,6 +1,9 @@
 #!/bin/bash
-exit 0
+# exit 0
 SESSION_NAME='work'
+PROJECT_ROOT="~/Documents/Project/Bitmark"
+PROJECT_NAME="bitmark-webapp"
+PROJECT_PATH=${PROJECT_ROOT}/${PROJECT_NAME}
 
 tmux start-server
 
@@ -8,24 +11,28 @@ tmux has-session -t ${SESSION_NAME}
 if [ $? != 0 ]
 then
     # dsp rails at port 3000
-    tmux new-session -d -s ${SESSION_NAME} -n dsp-rails
-    tmux send-keys -t ${SESSION_NAME} 'cd ~/Documents/Project/vpon-dsp' C-m
-    tmux send-keys -t ${SESSION_NAME} 'spring stop; rails s -p3000' C-m
+    dir1="account-client"
+    tmux new-session -d -s ${SESSION_NAME} -n $dir1
+    tmux send-keys -t ${SESSION_NAME} "cd ${PROJECT_PATH}/${dir1}" C-m
+    tmux send-keys -t ${SESSION_NAME} 'npm run watch:dev' C-m
 
     # dsp js bundle
-    tmux new-window -t ${SESSION_NAME}:2 -n dsp-js
-    tmux send-keys -t ${SESSION_NAME}:2 'cd ~/Documents/Project/vpon-dsp/public/app/flux' C-m
-    tmux send-keys -t ${SESSION_NAME}:2 'npm run build:watch' C-m
+    dir2="webapp-client"
+    tmux new-window -t ${SESSION_NAME}:2 -n $dir2
+    tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir2}" C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'npm run watch:dev' C-m
 
     # ssp rails at port 4000
-    tmux new-window -t ${SESSION_NAME}:3 -n ssp-rails
-    tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/ssp-web-api/' C-m
-    tmux send-keys -t ${SESSION_NAME}:3 'rails s -p4000'
+    dir3="webapp"
+    tmux new-window -t ${SESSION_NAME}:3 -n ${dir3}
+    tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir3}" C-m
+    tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
 
     # ssp js at port 4001
-    tmux new-window -t ${SESSION_NAME}:4 -n ssp-js
-    tmux send-keys -t ${SESSION_NAME}:4 'cd ~/Documents/Project/ssp-web-ui/' C-m
-    tmux send-keys -t ${SESSION_NAME}:4 'npm run start'
+    dir4="account"
+    tmux new-window -t ${SESSION_NAME}:4 -n $dir4
+    tmux send-keys -t ${SESSION_NAME}:4 "cd ${PROJECT_PATH}/${dir4}" C-m
+    tmux send-keys -t ${SESSION_NAME}:4 'go run main.go' C-m
 
     # id
     #tmux new-window -t ${SESSION_NAME}:3 -n idp
