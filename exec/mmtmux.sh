@@ -33,7 +33,7 @@ then
     dir4="account"
     tmux new-window -t ${SESSION_NAME}:3 -n $dir4
     tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir4}" C-m
-    sleep 1
+    sleep 2
     tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
 
     # id
