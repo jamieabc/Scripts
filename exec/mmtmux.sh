@@ -1,5 +1,4 @@
 #!/bin/bash
-# exit 0
 SESSION_NAME='work'
 PROJECT_ROOT="~/Documents/Project/Bitmark"
 PROJECT_NAME="bitmark-webapp"
@@ -33,7 +32,7 @@ then
     dir4="account"
     tmux new-window -t ${SESSION_NAME}:3 -n $dir4
     tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir4}" C-m
-    sleep 2
+    sleep 4
     tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
 
     # id
