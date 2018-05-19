@@ -1,6 +1,0 @@
-#!/bin/sh
-find ./build/core/ -name main.mk -exec perl -i -pe 's/64/i686/g' {} \;
-find ./external/clearsilver/cgi/ -name Android.mk -exec perl -i -pe 's/m64/m32/g' {} \;
-find ./external/clearsilver/java-jni/ -name Android.mk -exec perl -i -pe 's/m64/m32/g' {} \;
-find ./external/clearsilver/util/ -name Android.mk -exec perl -i -pe 's/m64/m32/g' {} \;
-find ./external/clearsilver/cs/ -name Android.mk -exec perl -i -pe 's/m64/m32/g' {} \;

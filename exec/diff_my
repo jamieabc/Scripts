@@ -1,2 +1,0 @@
-#!/bin/sh 
-diff wpa_supplicant_6/$1 wpa_supplicant_hostap/$1

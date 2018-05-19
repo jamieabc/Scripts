@@ -1,2 +1,0 @@
-#!/bin/sh 
-vimdiff -X wpa_supplicant_hostap/$1 wpa_supplicant_6/$1
