@@ -10,35 +10,27 @@ tmux has-session -t ${SESSION_NAME}
 if [ $? != 0 ]
 then
     # account client side
-    dir1="account-client"
+    dir1="account-client2"
     tmux new-session -d -s ${SESSION_NAME} -n $dir1
     tmux send-keys -t ${SESSION_NAME} "cd ${PROJECT_PATH}/${dir1}" C-m
     tmux send-keys -t ${SESSION_NAME} 'npm run watch:dev' C-m
-
-    # webapp client side
-    dir2="webapp-client"
-    tmux new-window -t ${SESSION_NAME}:1 -n $dir2
-    tmux send-keys -t ${SESSION_NAME}:1 "cd ${PROJECT_PATH}/${dir2}" C-m
-    tmux send-keys -t ${SESSION_NAME}:1 'npm run watch:dev' C-m
+    tmux rename-window -t0 "webapp-client"
 
     # webapp server side
     dir3="webapp"
-    tmux new-window -t ${SESSION_NAME}:2 -n ${dir3}
-    tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir3}" C-m
+    tmux new-window -t ${SESSION_NAME}:1 -n ${dir3}
+    tmux send-keys -t ${SESSION_NAME}:1 "cd ${PROJECT_PATH}/${dir3}" C-m
     sleep 1
-    tmux send-keys -t ${SESSION_NAME}:2 'go run main.go' C-m
+    tmux send-keys -t ${SESSION_NAME}:1 'go run main.go' C-m
+    tmux rename-window -t1 "webapp-server-app"
 
     # accoutn server side
     dir4="account"
-    tmux new-window -t ${SESSION_NAME}:3 -n $dir4
-    tmux send-keys -t ${SESSION_NAME}:3 "cd ${PROJECT_PATH}/${dir4}" C-m
+    tmux new-window -t ${SESSION_NAME}:2 -n $dir4
+    tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir4}" C-m
     sleep 4
-    tmux send-keys -t ${SESSION_NAME}:3 'go run main.go' C-m
-
-    # id
-    #tmux new-window -t ${SESSION_NAME}:3 -n idp
-    #tmux send-keys -t ${SESSION_NAME}:3 'cd ~/Documents/Project/vpon-idp' C-m
-    #tmux send-keys -t ${SESSION_NAME}:3 'spring stop; rails s -p3001' C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'go run main.go' C-m
+    tmux rename-window -t2 "webapp-server-account"
 
     tmux select-window -t ${SESSION_NAME}:0
 fi
