@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+home_path=$HOME
+exec_path="$HOME/exec"
+
+files=($(ls -d ${exec_path}/tmux-*.sh))
+
+if (( ${#files[@]} == 0)); then
+    echo "no file exist"
+fi
+
+# display files
+# ${#array[@]} means total number of array
+display_list() {
+    echo -e "Available tmux files:\n"
+    for ((i = 0; i < ${#files[@]}; i++)); do
+        echo "$i)  ${files[$i]//$exec_path\//}"
+    done
+    echo -e "\nPlease input number:"
+}
+
+loop() {
+    display_list
+
+    read number
+
+    if [[ ($number > `expr ${#files[@]} - 1`) || ($number < 0) ]]; then
+        echo "option $number invalid"
+        loop
+    else
+        $(${files[$number]})
+    fi
+}
+
+loop
