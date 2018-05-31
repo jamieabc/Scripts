@@ -2,7 +2,7 @@
 SESSION_NAME='work'
 PROJECT_ROOT="~/Documents/Project/Bitmark"
 PROJECT_NAME="beats-ex"
-PROJECT_PATH=${PROJECT_ROOT}/${PROJECT_NAME}
+PROJECT_PATH="${PROJECT_ROOT}/${PROJECT_NAME}"
 
 tmux start-server
 
