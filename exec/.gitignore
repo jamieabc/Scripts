@@ -1,2 +1,4 @@
 node_modules/*
 *myconf*
+
+exec/.DS_Store

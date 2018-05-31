@@ -30,6 +30,7 @@
     "sync-request": "^2.1.0"
   },
   "dependencies": {
-    "googleapis": "^22.2.0"
+    "googleapis": "^22.2.0",
+    "puppeteer": "^1.2.0"
   }
 }
