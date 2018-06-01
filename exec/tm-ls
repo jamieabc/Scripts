@@ -28,7 +28,8 @@ loop() {
         echo "option $number invalid"
         loop
     else
-        $(${files[$number]})
+        ${files[$number]}
+        exit
     fi
 }
 

@@ -1,7 +1,7 @@
 #!/bin/bash
-SESSION_NAME='beats'
+SESSION_NAME='registry'
 PROJECT_ROOT="~/Documents/Project/Bitmark"
-PROJECT_NAME="beats-ex"
+PROJECT_NAME="registry-website"
 PROJECT_PATH="${PROJECT_ROOT}/${PROJECT_NAME}"
 
 tmux start-server

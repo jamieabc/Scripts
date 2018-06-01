@@ -12,7 +12,7 @@ if [ ! -d /Volumes/RamDisk ]; then
     exit 1
 fi
 
-PROJ_PATH=~/Documents/Project
+PROJ_PATH=~/Documents/Project/Bitmark
 
 if [ "$1" == "start" ] || [ "$1" == "s" ];then
     backup=$2-backup
