@@ -28,8 +28,7 @@ then
     dir4="account"
     tmux new-window -t ${SESSION_NAME}:2 -n $dir4
     tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir4}" C-m
-    sleep 4
-    tmux send-keys -t ${SESSION_NAME}:2 'go run main.go' C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'sleep 4; go run main.go' C-m
     tmux rename-window -t2 "server-account"
 
     tmux select-window -t ${SESSION_NAME}:0
