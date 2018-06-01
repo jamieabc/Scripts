@@ -24,6 +24,8 @@ then
     tmux rename-window -t1 "server"
 
     tmux select-window -t ${SESSION_NAME}:0
+
+    tmux set-hook -g session-closed "run-shell 'forever stopall; sleep 2'"
 fi
 
 tmux attach-session -t ${SESSION_NAME}
