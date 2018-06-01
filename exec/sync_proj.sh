@@ -5,9 +5,7 @@ const syncProjCmd = '/Users/Aaron/exec/proj2ram.sh';
 const syncEmacsCmd = '/Users/Aaron/exec/emacs2ram.sh';
 
 const projList = [
-  'vpon-dsp',
-  'ssp-web-api',
-  'ssp-web-ui'
+  'beats-ex'
 ];
 
 if (process.argv.length !== 3) {
@@ -25,4 +23,4 @@ const operation = process.argv[2];
 shell.exec(`USER=aaron ${syncEmacsCmd} ${operation}`);
 
 // sync projects
-// projList.forEach((p) => shell.exec(`USER=aaron ${syncProjCmd} ${operation} ${p}`));
+projList.forEach((p) => shell.exec(`USER=aaron ${syncProjCmd} ${operation} ${p}`));
