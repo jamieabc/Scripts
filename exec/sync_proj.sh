@@ -5,7 +5,7 @@ const syncProjCmd = '/Users/Aaron/exec/proj2ram.sh';
 const syncEmacsCmd = '/Users/Aaron/exec/emacs2ram.sh';
 
 const projList = [
-  'beats-ex'
+  // 'beats-ex'
 ];
 
 if (process.argv.length !== 3) {
