@@ -20,7 +20,7 @@ then
     dir2="server"
     tmux new-window -t ${SESSION_NAME}:1 -n $dir2
     tmux send-keys -t ${SESSION_NAME}:1 "cd ${PROJECT_PATH}/${dir2}" C-m
-    tmux send-keys -t ${SESSION_NAME}:1 'npm run watch' C-m
+    tmux send-keys -t ${SESSION_NAME}:1 'npm run start' C-m
     tmux rename-window -t1 "server"
 
     tmux select-window -t ${SESSION_NAME}:0
