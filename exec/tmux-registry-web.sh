@@ -1,5 +1,5 @@
 #!/bin/bash
-SESSION_NAME='registry'
+SESSION_NAME='registry-web'
 PROJECT_ROOT="~/Documents/Project/Bitmark"
 PROJECT_NAME="registry-website"
 PROJECT_PATH="${PROJECT_ROOT}/${PROJECT_NAME}"
