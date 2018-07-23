@@ -17,7 +17,9 @@ then
 
     tmux new-session -d -s ${SESSION_NAME} -n $dir
     tmux send-keys -t ${SESSION_NAME} "cd ${PROJECT_PATH}" C-m
-    tmux send-keys -t ${SESSION_NAME} "forever start -f -o ${logfile} -w --watchDirectory src app.js && tail -f ${logfile}" C-m
+    tmux send-keys -t ${SESSION_NAME} "forever start -f -o ${logfile} -w --watchDirectory src app.js" C-m
+    tmux send-keys -t ${SESSION_NAME} "sleep 1" C-m
+    tmux send-keys -t ${SESSION_NAME} "tail -f ./${logfile}" C-m
     tmux rename-window -t0 "node"
 
     tmux select-window -t ${SESSION_NAME}:0
