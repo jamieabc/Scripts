@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+if ARGV.empty?
+  puts 'Error input'
+  puts 'Please type commands'
+  exit
+end
+
+# default wait for 3 seconds to try again
+sleep_interval = 3
+
+command = ARGV.join(' ')
+puts "\nlooping command: #{command}\n\n"
+
+loop do
+  `#{command}`
+  puts ""
+
+  if $?.success?
+    `say execute command success`
+    break
+  end
+
+  sleep sleep_interval
+end
