@@ -20,7 +20,7 @@ then
     dir2="webapp"
     tmux new-window -t ${SESSION_NAME}:2 -n $dir2
     tmux send-keys -t ${SESSION_NAME}:2 "cd ${PROJECT_PATH}/${dir2}" C-m
-    tmux send-keys -t ${SESSION_NAME}:2 'sleep 10; go run main.go' C-m
+    tmux send-keys -t ${SESSION_NAME}:2 'sleep 15; go run main.go' C-m
     tmux rename-window -t2 "webapp-server"
 
     tmux select-window -t ${SESSION_NAME}:0
