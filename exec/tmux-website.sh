@@ -11,7 +11,7 @@ if [ $? != 0 ]
 then
     # account client side
     tab="server"
-    cmds="npm run watch:dev"
+    cmds="npm run server:dev"
     tmux new-session -d -s ${SESSION_NAME} -n $tab
     tmux send-keys -t ${SESSION_NAME} "cd ${PROJECT_PATH}" C-m
     tmux send-keys -t ${SESSION_NAME} "${cmds}" C-m
