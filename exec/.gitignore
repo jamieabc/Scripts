@@ -2,3 +2,11 @@ node_modules/*
 *myconf*
 
 exec/.DS_Store
+
+# crypto
+bitcoind
+bitcoin-cli
+bitcoin-tx
+litecoind
+litecoin-cli
+litecoin-tx
