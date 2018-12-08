@@ -1,0 +1,58 @@
+#!/bin/sh
+
+conf_dir="conf"
+binary_dir="bin"
+# bitcoin_config="${HOME}/${conf_dir}/bitcoin.conf"
+bitcoin_dir="${HOME}/.bitcoin"
+bitcoin_config="${HOME}/bin/conf/bitcoin.conf"
+# litecoin_config="${HOME}/${conf_dir}/litecoin.conf"
+litecoin_config="${HOME}/bin/conf/litecoin.conf"
+litecoin_pid="${HOME}/${binary_dir}/litecoind.pid"
+
+# start bitcoind
+if pgrep bitcoind >/dev/null; then
+    bitcoin-cli -conf=bitcoin.conf stop
+    sleep 5
+fi
+
+# create default data directory
+if [ ! -d "${bitcoin_dir}" ]; then
+    printf "bitcoin directory not exist, creating...\n"
+    mkdir "${bitcoin_dir}"
+fi
+
+# copy config file if not exist
+if [ ! -f "${bitcoin_dir}/bitcoin.conf" ]; then
+    printf "copy bitcoin config into bitcoin directory...\n"
+    cp "${bitcoin_config}" "${bitcoin_dir}"
+fi
+
+# remove existing regtest data directory
+if [ -d "${bitcoin_dir}/regtest" ]; then
+    printf "remove existing bitcoin regtest directory...\n"
+    rm -r "${bitcoin_dir}/regtest"
+fi
+
+bitcoind -conf=bitcoin.conf -daemon
+
+# mine for some coins
+sleep 5
+bitcoin-cli -conf=bitcoin.conf generate 105
+
+# start litecoind
+if pgrep litecoin >/dev/null; then
+    echo litecoin daemon is already running...
+else
+    # create default data directory
+    if [ ! -d "${HOME}/.litecoin" ]; then
+        mkdir "${HOME}/.litecoin"
+    fi
+
+    # replace existing conf
+    if [ -f "${HOME}/.litecoin/litecoin.conf" ]; then
+        rm -f "${HOME}/.litecoin/litecoin.conf"
+    fi
+    cp "${litecoin_config}" "${HOME}/.litecoin/"
+
+    litecoind -daemon -pid="${litecoin_pid}" -conf=litecoin.conf
+fi

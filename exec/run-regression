@@ -1,0 +1,75 @@
+#!/usr/local/bin/bash
+
+export GOPATH="${HOME}/gocode"
+export PATH="${GOPATH}/bin":$PATH
+
+# run crypto
+~/bin/run-crypto
+
+# setup bitmarkd if bitmarkd config not exist
+~/bin/setup-bitmarkd
+if [ $? -ne 0 ]; then
+    printf "\nAbort..."
+    exit -1
+fi
+
+# run bitmarkd
+array=("1" "2" "3" "4" "5")
+for number in "${array[@]}"
+do
+    cd "${HOME}/.config/bitmarkd${number}"
+    nohup bitmarkd --config-file=bitmarkd.conf start >/dev/null 2>&1 &
+
+    # wait for bitmarkd to initialize tcp
+    sleep 50 
+done
+
+# setup recorderd if recorderd config not exist
+
+~/bin/setup-recorderd
+
+# run recorderd
+printf "\nRun recorderd..."
+~/bin/run-recorderd
+
+# calculate time
+calculate_time() {
+    if [ $start_time = "" ]; then
+        start_time=$(date +%s)
+    elif [ %end_time = "" ]; then
+        end_time=$(date +%s)
+    else
+        printf "\nIt takes $(( $end_time - $start_time )) seconds bitmarkd connect\6n"
+    fi
+}
+
+# check connection, at leat 3 servers should be connected
+node_number=0
+start_time=""
+end_time=""
+calculate_time
+while true
+do
+    array=("1" "2" "3" "4" "5")
+    for number in "${array[@]}"
+    do
+        normal_mode=$(curl -s -k "https://localhost:2${number}31/bitmarkd/details" | jq | grep -c Normal)
+    if [ $normal_mode -ne 0 ]; then
+        printf "\nnode ${number} in Normal mode, cli port 2${number}30, https port 2${number}31\n"
+        node_number=$number
+        calculate_time
+        break 2                 # break 2 levels of loop
+    fi
+    done
+    printf "waiting nodes to sync..."
+    sleep 5
+done
+calculate_time
+
+# update cli config, the existing port may not fit current staus
+cd "${HOME}/conf"
+cli_filename="cli.conf"
+cli_port="2${number}30"
+if [ -f "${cli_filename}" ]; then
+    sed -i -- "s/\"connect\": \".*/\"connect\": \"127.0.0.1:${cli_port}\",/g" "${cli_filename}"
+fi
