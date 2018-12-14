@@ -21,8 +21,8 @@ switch_crypto() {
 
     if [ $machine == "mac" ]; then
         cd ${HOME}/Library/'Application Support'/Bitcoin
-        cd - 1 > /dev/null
         ln -sf bitcoin.mac.conf bitcoin.conf > /dev/null
+        cd - 1 > /dev/null
         cd ${HOME}/Library/'Application Support'/Litecoin
         ln -sf litecoin.mac.conf litecoin.conf > /dev/null
         cd - 1 > /dev/null
