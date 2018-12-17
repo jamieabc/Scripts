@@ -28,8 +28,8 @@ switch_crypto() {
         cd - 1 > /dev/null
     else
         cd ${HOME}/Library/'Application Support'/Bitcoin
-        cd - 1 > /dev/null
         ln -sf bitcoin.remote.conf bitcoin.conf > /dev/null
+        cd - 1 > /dev/null
         cd ${HOME}/Library/'Application Support'/Litecoin
         ln -sf litecoin.remote.conf litecoin.conf > /dev/null
         cd - 1 > /dev/null
