@@ -18,7 +18,7 @@ bitcoind -daemon
 # mine for some coins
 sleep 10
 bitcoin-cli generatetoaddress 105 $btc_addr > /dev/null 2>&1
-printf "mine coins for btc addr #{btc_addr}\n"
+printf "mine coins for btc addr $btc_addr\n"
 
 if pgrep litecoind >/dev/null; then
     litecoin-cli stop
@@ -30,4 +30,4 @@ litecoind -daemon
 # mine for some coins
 sleep 10
 litecoin-cli generatetoaddress 105 $ltc_addr > /dev/null 2>&1
-printf "mine coins for ltc addr #{ltc_addr}\n"
+printf "mine coins for ltc addr $ltc_addr\n"
