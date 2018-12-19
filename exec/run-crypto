@@ -1,7 +1,7 @@
 #!/bin/sh
 
-btc_addr=mnmAxmmcHGK7zUSQRF4LBNBzc1jgB7hWxd
-ltc_addr=mjPkDNakVA4w4hJZ6WF7p8yKUV2merhyCM
+btc_addr=modnSoevy3wuZoHCAEpqPjrXjjUb3qqwuw
+ltc_addr=mujyVMutzD9RWe67eSq49XLMpoMKNthR32
 
 # start bitcoind
 if pgrep bitcoind >/dev/null; then
