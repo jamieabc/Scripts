@@ -1,7 +1,9 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 
 export GOPATH="${HOME}/gocode"
 export PATH="${GOPATH}/bin":$PATH
+
+ERROR_CODE=1
 
 # run crypto
 ~/bin/run-crypto
@@ -9,8 +11,8 @@ export PATH="${GOPATH}/bin":$PATH
 # setup bitmarkd if bitmarkd config not exist
 ~/bin/setup-bitmarkd
 if [ $? -ne 0 ]; then
-    printf "\nAbort..."
-    exit -1
+    printf "\nsetup bitmarkd fail...abort\n"
+    exit $ERROR_CODE
 fi
 
 # run bitmarkd
@@ -21,16 +23,39 @@ do
     nohup bitmarkd --config-file=bitmarkd.conf start >/dev/null 2>&1 &
 
     # wait for bitmarkd to initialize tcp
-    sleep 50 
+    sleep 90
 done
 
-# setup recorderd if recorderd config not exist
-
-~/bin/setup-recorderd
+# stop existing running recorderd
+for pid in $(pgrep recorderd)
+do
+    printf "Stop recorderd process ${pid}...\n"
+    pkill pid
+done
 
 # run recorderd
 printf "\nRun recorderd..."
-~/bin/run-recorderd
+
+recorderd_dir="${HOME}/.config/recorderd"
+recorderd_file="recorderd.conf"
+
+while true;
+do
+    if pgrep recorderd; then
+        break
+    fi
+
+    cd "${recorderd_dir}"
+    echo starting recorderd...
+    nohup recorderd --config-file="${recorderd_file}" >/dev/null 2>&1 &
+
+    # wait 5 seconds to check
+    printf "\nChecking recroderd runing status..."
+    sleep 10
+done
+printf "recorderd start success\n"
+
+cd - 1
 
 # calculate time
 calculate_time() {
@@ -65,11 +90,3 @@ do
     sleep 5
 done
 calculate_time
-
-# update cli config, the existing port may not fit current staus
-cd "${HOME}/conf"
-cli_filename="cli.conf"
-cli_port="2${number}30"
-if [ -f "${cli_filename}" ]; then
-    sed -i -- "s/\"connect\": \".*/\"connect\": \"127.0.0.1:${cli_port}\",/g" "${cli_filename}"
-fi
