@@ -26,12 +26,26 @@ switch_crypto() {
         cd ${HOME}/Library/'Application Support'/Litecoin
         ln -sf litecoin.mac.conf litecoin.conf > /dev/null
         cd - 1 > /dev/null
+        cd ${HOME}/Documents/Project/Bitmark/bitmarkd-regression-test
+        ln -sf cli1.mac.conf cli1.conf > /dev/null
+        ln -sf cli2.mac.conf cli2.conf > /dev/null
+        ln -sf cli3.mac.conf cli3.conf > /dev/null
+        ln -sf cli4.mac.conf cli4.conf > /dev/null
+        ln -sf cli5.mac.conf cli5.conf > /dev/null
+        cd - 1 > /dev/null
     else
         cd ${HOME}/Library/'Application Support'/Bitcoin
         ln -sf bitcoin.remote.conf bitcoin.conf > /dev/null
         cd - 1 > /dev/null
         cd ${HOME}/Library/'Application Support'/Litecoin
         ln -sf litecoin.remote.conf litecoin.conf > /dev/null
+        cd - 1 > /dev/null
+        cd ${HOME}/Documents/Project/Bitmark/bitmarkd-regression-test
+        ln -sf cli1.remote.conf cli1.conf > /dev/null
+        ln -sf cli2.remote.conf cli2.conf > /dev/null
+        ln -sf cli3.remote.conf cli3.conf > /dev/null
+        ln -sf cli4.remote.conf cli4.conf > /dev/null
+        ln -sf cli5.remote.conf cli5.conf > /dev/null
         cd - 1 > /dev/null
     fi
 }
