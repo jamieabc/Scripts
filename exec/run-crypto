@@ -1,27 +1,33 @@
 #!/bin/sh
 
+btc_addr=mnmAxmmcHGK7zUSQRF4LBNBzc1jgB7hWxd
+ltc_addr=mjPkDNakVA4w4hJZ6WF7p8yKUV2merhyCM
+
 # start bitcoind
 if pgrep bitcoind >/dev/null; then
-    bitcoin-cli -conf=bitcoin.conf stop
-    sleep 5
+    bitcoin-cli stop
+    sleep 10
 fi
 
-rm -r "${HOME}/Library/'Application Support'/Bitcoin/regtest" > /dev/null 2>&1
-rm -r "${HOME}/Library/'Application Support'/Litecoin/regtest" > /dev/null 2>&1
+printf "remove data directories...\n"
+rm -r "${HOME}/Library/Application Support/Bitcoin/regtest" > /dev/null 2>&1
+rm -r "${HOME}/Library/Application Support/Litecoin/regtest" > /dev/null 2>&1
 
 bitcoind -daemon
 
 # mine for some coins
 sleep 10
-bitcoin-cli generatetoaddress 105 mnmAxmmcHGK7zUSQRF4LBNBzc1jgB7hWxd
+bitcoin-cli generatetoaddress 105 $btc_addr > /dev/null 2>&1
+printf "mine coins for btc addr #{btc_addr}\n"
 
 if pgrep litecoind >/dev/null; then
     litecoin-cli stop
-    sleep 5
+    sleep 10
 fi
 
 litecoind -daemon
 
 # mine for some coins
 sleep 10
-litecoin-cli generatetoaddress 105 mjPkDNakVA4w4hJZ6WF7p8yKUV2merhyCM
+litecoin-cli generatetoaddress 105 $ltc_addr > /dev/null 2>&1
+printf "mine coins for ltc addr #{ltc_addr}\n"

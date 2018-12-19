@@ -2,6 +2,7 @@
 set -e
 
 ERROR_CODE=1
+SUCCESS_CODE=0
 
 # stop existing running bitmarkd
 while pgrep bitmarkd >/dev/null
@@ -32,7 +33,7 @@ rm -rf "${package_dir}" || true
 
 # download latest bitmarkd
 echo downloading bitmarkd...
-go get -u -v "${package}" || true # avoid error message or no Go files in ...
+go get -u -v "${package}" || true # avoid error message on no Go files
 cd ${package_dir}
 go get -u -v ./...
 cd ~
@@ -75,7 +76,7 @@ do
         # remove backup directory if exist
         [ -d "${dir}/data-backup" ] && rm -r "${dir}/data-backup"
 
-        [ -d "${dir}/data"] && mv "${dir}/data" "${dir}/data-backup"
+        [ -d "${dir}/data" ] && mv "${dir}/data" "${dir}/data-backup"
     fi
 
     # remove existing log files
@@ -84,3 +85,4 @@ do
     # remove peer data
     [ -e "${dir}/peers-local.json" ] && rm "${dir}/peers-local.json"
 done
+exit $SUCCESS_CODE
