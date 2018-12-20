@@ -86,6 +86,7 @@ do
         if [ $normal_mode -ne 0 ]; then
             printf "\nnode ${number} in Normal mode, cli port 2${number}30, https port 2${number}31\n"
             calculate_time
+            printf 'run-regression finished' | terminal-notifier
             break 2                 # break 2 levels of loop
         fi
     done
