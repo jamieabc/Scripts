@@ -36,7 +36,7 @@ sleep 5
 sync_wallet
 
 printf "mine for some coins..."
-bitcoin-cli generatetoaddress 150 "$btc_addr" > /dev/null 2>&1
-litecoin-cli generatetoaddress 150 "$ltc_addr" > /dev/null 2>&1
+bitcoin-cli generatetoaddress 105 "$btc_addr" > /dev/null 2>&1
+litecoin-cli generatetoaddress 105 "$ltc_addr" > /dev/null 2>&1
 
 sync_wallet

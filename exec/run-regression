@@ -27,7 +27,7 @@ do
 
     # wait for bitmarkd to initialize tcp, only for 3, 4, 5
     if [ $number != "1" ]; then
-        sleep 90
+        sleep 100
     fi
 done
 
