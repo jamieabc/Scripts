@@ -14,7 +14,7 @@ sync_wallet () {
 while pgrep bitcoind >/dev/null
 do
     bitcoin-cli stop
-    sleep 1
+    sleep 2
 done
 
 printf "remove data directories...\n"
@@ -27,7 +27,7 @@ bitcoind -daemon
 while pgrep litecoind >/dev/null
 do
     litecoin-cli stop
-    sleep 1
+    sleep 2
 done
 
 litecoind -daemon
