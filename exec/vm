@@ -1,6 +1,0 @@
-#! /bin/bash
-echo 'Start kvm'
-xauth list | while read line; do
- sudo -i xauth add $line
-done
-sudo -i virt-manager
