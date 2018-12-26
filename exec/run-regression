@@ -25,7 +25,7 @@ do
     cd "${HOME}/.config/bitmarkd${number}"
     nohup bitmarkd --config-file="bitmarkd${number}.conf" start >/dev/null 2>&1 &
 
-    # wait for bitmarkd to initialize tcp, only for 3, 4, 5
+    # wait for bitmarkd to initialize tcp, only for 3, 4
     if [ "$number" != "1" ] && [ "$number" != "5" ]; then
         sleep 100
     fi

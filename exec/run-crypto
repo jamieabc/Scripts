@@ -10,7 +10,7 @@ sync_wallet () {
     WALLET_PASSWORD=12345678 bitmark-wallet -C $wallet_path ltc -t sync
 }
 
-# start bitcoind
+# stop bitcoind
 while pgrep bitcoind >/dev/null
 do
     bitcoin-cli stop
@@ -23,7 +23,7 @@ rm -r "${HOME}/Library/Application Support/Litecoin/regtest" > /dev/null 2>&1
 
 bitcoind -daemon
 
-# start litecoind
+# stop litecoind
 while pgrep litecoind >/dev/null
 do
     litecoin-cli stop
@@ -31,8 +31,8 @@ do
 done
 
 litecoind -daemon
-sleep 5
 
+sleep 5
 sync_wallet
 
 printf "mine for some coins..."
