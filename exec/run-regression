@@ -8,7 +8,7 @@ ERROR_CODE=1
 # run crypto
 run-crypto
 
-if [ "$1" != "bm_only" ]; then
+if [ "$1" != "b" ]; then
     # setup bitmarkd if bitmarkd config not exist
     setup-bitmarkd
     if [ $? -ne 0 ]; then
@@ -27,7 +27,7 @@ do
 
     # wait for bitmarkd to initialize tcp, only for 3, 4
     if [ "$number" != "1" ] && [ "$number" != "5" ]; then
-        sleep 100
+        sleep 120
     fi
 done
 

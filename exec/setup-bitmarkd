@@ -1,4 +1,4 @@
-#!/usr//bin/env bash
+#!/usr/bin/env bash
 set -e
 
 ERROR_CODE=1
@@ -22,8 +22,8 @@ package_dir="${GOPATH}/src/${package}"
 bin_dir="${GOPATH}/bin"
 
 # remove existing bitmarkd
-go clean "${package}"
-rm -rf "${package_dir}" || true
+[ -d "${package_dir}" ] && go clean "${package}"
+[ -d "${package_dir}" ] && rm -rf "${package_dir}"
 
 # remove executable files if any exist
 [ -e "${GOPATH}/bin/bitmarkd" ] && rm "${GOPATH}/bin/bitmarkd"
