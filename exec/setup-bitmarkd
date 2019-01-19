@@ -8,11 +8,11 @@ SUCCESS_CODE=0
 while pgrep bitmarkd >/dev/null
 do
     echo stopping bitmarkd...
-    pkill bitmarkd
+    pkill -9 bitmarkd
 
-    # wait 5 seconds to check
+    # wait 3 seconds to check
     echo checking...
-    sleep 5
+    sleep 3
 done
 echo all bitmarkd are stopped
 
@@ -21,30 +21,33 @@ package="github.com/bitmark-inc/bitmarkd"
 package_dir="${GOPATH}/src/${package}"
 bin_dir="${GOPATH}/bin"
 
-# remove existing bitmarkd
-[ -d "${package_dir}" ] && go clean "${package}"
-[ -d "${package_dir}" ] && rm -rf "${package_dir}"
+# rebuild bitmarkd only if no args of b
+if [ "$1" != "b" ]; then
+    # remove existing bitmarkd
+    [ -d "${package_dir}" ] && go clean "${package}"
+    [ -d "${package_dir}" ] && rm -rf "${package_dir}"
 
-# remove executable files if any exist
-[ -e "${GOPATH}/bin/bitmarkd" ] && rm "${GOPATH}/bin/bitmarkd"
-[ -e "${GOPATH}/bin/bitmark-cli" ] && rm "${GOPATH}/bin/bitmark-cli"
-[ -e "${GOPATH}/bin/bitmark-info" ] && rm "${GOPATH}/bin/bitmark-info"
-[ -e "${GOPATH}/bin/bitmark-dumpdb" ] && rm "${GOPATH}/bin/bitmark-dumpdb"
+    # remove executable files if any exist
+    [ -e "${GOPATH}/bin/bitmarkd" ] && rm "${GOPATH}/bin/bitmarkd"
+    [ -e "${GOPATH}/bin/bitmark-cli" ] && rm "${GOPATH}/bin/bitmark-cli"
+    [ -e "${GOPATH}/bin/bitmark-info" ] && rm "${GOPATH}/bin/bitmark-info"
+    [ -e "${GOPATH}/bin/bitmark-dumpdb" ] && rm "${GOPATH}/bin/bitmark-dumpdb"
 
-# download latest bitmarkd
-echo downloading bitmarkd...
-go get -u -v "${package}" || true # avoid error message on no Go files
-cd ${package_dir}
-go get -u -v ./...
-cd ~
+    # download latest bitmarkd
+    echo downloading bitmarkd...
+    go get -u -v "${package}" || true # avoid error message on no Go files
+    cd ${package_dir}
+    go get -u -v ./...
+    cd ~
 
-echo "entering directory ${package_dir}"
-cd "${package_dir}"
+    echo "entering directory ${package_dir}"
+    cd "${package_dir}"
 
-# compile
-echo compiling...
-go build -v ./...
-go install -v ./...
+    # compile
+    echo compiling...
+    go build -v ./...
+    go install -v ./...
+fi
 
 if [ ! -f "${bin_dir}/bitmarkd" ]; then
     echo bitmarkd build fail...

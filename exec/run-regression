@@ -8,13 +8,11 @@ ERROR_CODE=1
 # run crypto
 run-crypto
 
-if [ "$1" != "b" ]; then
-    # setup bitmarkd if bitmarkd config not exist
-    setup-bitmarkd
-    if [ $? -ne 0 ]; then
-        printf "\nsetup bitmarkd fail...abort\n"
-        exit $ERROR_CODE
-    fi
+# setup bitmarkd if bitmarkd config not exist
+setup-bitmarkd $1
+if [ $? -ne 0 ]; then
+    printf "\nsetup bitmarkd fail...abort\n"
+    exit $ERROR_CODE
 fi
 
 # run bitmarkd
@@ -27,7 +25,7 @@ do
 
     # wait for bitmarkd to initialize tcp, only for 3, 4
     if [ "$number" != "1" ] && [ "$number" != "5" ]; then
-        sleep 120
+        sleep 130
     fi
 done
 
@@ -77,20 +75,16 @@ calculate_time() {
 # check connection, at leat 3 servers should be connected
 local=127.0.0.1
 calculate_time
-while true
+array=("1" "2" "3" "4" "5")
+for number in "${array[@]}"
 do
-    array=("1" "2" "3" "4" "5")
-    for number in "${array[@]}"
-    do
-        normal_mode=$(curl -s -k "https://${local}:2${number}31/bitmarkd/details" | jq | grep -c Normal)
-        if [ $normal_mode -ne 0 ]; then
-            printf "\nnode ${number} in Normal mode, cli port 2${number}30, https port 2${number}31\n"
-            calculate_time
-            printf 'run-regression finished' | terminal-notifier
-            break 2                 # break 2 levels of loop
-        fi
-    done
-    printf "waiting nodes to sync...\n"
-    sleep 5
+    normal_mode=$(curl -s -k "https://${local}:2${number}31/bitmarkd/details" | jq | grep -c Normal)
+    if [ $normal_mode -ne 0 ]; then
+        printf "\nnode ${number} in Normal mode, cli port 2${number}30, https port 2${number}31\n"
+        calculate_time
+        printf 'run-regression finished' | terminal-notifier
+        break 1                 # break 1 levels of loop
+    fi
 done
+printf "node is connected...\n"
 calculate_time
