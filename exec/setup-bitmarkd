@@ -87,5 +87,8 @@ do
 
     # remove peer data
     [ -e "${dir}/peers-local.json" ] && rm "${dir}/peers-local.json"
+
+    # remove reservoir cache file
+    [ -e "${dir}/reservoir-local.cache" ] && rm "${dir}/reservoir-local.cache"
 done
 exit $SUCCESS_CODE
