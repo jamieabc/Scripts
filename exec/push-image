@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# usage: push-image filename version
+# e.g. push-image Dockerfile 0.1.1
+
+eval "$(aws ecr get-login --no-include-email --region ap-northeast-1)"
+name=$(pwd | xargs basename)
+docker build -t $name -f $1 .
+
+repo_uri=083397868157.dkr.ecr.ap-northeast-1.amazonaws.com
+ver=$2-$(git rev-parse --short HEAD)
+tag=$repo_uri/$name:$ver
+
+docker tag $name:latest $tag
+docker push $tag
