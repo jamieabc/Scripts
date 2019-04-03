@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+local_snapshots = `tmutil listlocalsnapshots /`.split("\n")
+
+local_snapshots.each do |snapshot|
+  name = snapshot.split('.')[3]
+  puts "removing snapshot #{name}"
+  `tmutil deletelocalsnapshots #{name}`
+end
