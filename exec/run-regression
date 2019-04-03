@@ -30,7 +30,7 @@ do
 done
 
 # stop existing running recorderd
-pkill recorderd
+pkill -f recorderd.conf
 
 # run recorderd
 printf "\nRun recorderd..."
