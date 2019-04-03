@@ -30,11 +30,7 @@ do
 done
 
 # stop existing running recorderd
-for pid in $(pgrep recorderd)
-do
-    printf "\nStop recorderd process ${pid}...\n"
-    pkill pid
-done
+pkill recorderd
 
 # run recorderd
 printf "\nRun recorderd..."
