@@ -7,14 +7,14 @@ SUCCESS_CODE=0
 # stop existing running bitmarkd
 while pgrep bitmarkd >/dev/null
 do
-    echo stopping bitmarkd...
+    printf "stopping bitmarkd...\n"
     pkill -9 bitmarkd
 
     # wait 3 seconds to check
-    echo checking...
+    printf "checking...\n"
     sleep 3
 done
-echo all bitmarkd are stopped
+printf "all bitmarkd are stopped\n"
 
 # compile bitmarkd
 package="github.com/bitmark-inc/bitmarkd"
@@ -24,7 +24,7 @@ bin_dir="${GOPATH}/bin"
 # rebuild bitmarkd only if no args of b
 if [ "$1" != "b" ]; then
     # remove existing bitmarkd
-    [ -d "${package_dir}" ] && go clean "${package}"
+    # [ -d "${package_dir}" ] && go clean "${package}"
     [ -d "${package_dir}" ] && rm -rf "${package_dir}"
 
     # remove executable files if any exist
@@ -34,26 +34,23 @@ if [ "$1" != "b" ]; then
     [ -e "${GOPATH}/bin/bitmark-dumpdb" ] && rm "${GOPATH}/bin/bitmark-dumpdb"
 
     # download latest bitmarkd
-    echo downloading bitmarkd...
-    go get -u -v "${package}" || true # avoid error message on no Go files
+    printf "downloading bitmarkd...\n"
+    GO111MODULE=off go get -u -v "${package}" || true # avoid error message on no Go files
     cd ${package_dir}
+    printf "download packages...\n"
     go get -u -v ./...
-    cd ~
-
-    echo "entering directory ${package_dir}"
-    cd "${package_dir}"
 
     # compile
-    echo compiling...
+    printf "compile bitmarkd\n"
     go build -v ./...
     go install -v ./...
 fi
 
 if [ ! -f "${bin_dir}/bitmarkd" ]; then
-    echo bitmarkd build fail...
+    printf "bitmarkd build fail...\n"
     exit $ERROR_CODE
 else
-    echo bitmarkd build success
+    printf "bitmarkd build success\n"
 fi
 
 # create config directory if not exist
@@ -63,13 +60,13 @@ if [ ! -d "${config_dir}" ]; then
 fi
 
 # generate bitmarkd config
-echo "generating bitmarkd configurations..."
+printf "generating bitmarkd configurations...\n"
 array=("1" "2" "3" "4" "5")
 for number in "${array[@]}"
 do
     # due to new bitcoin config, there exist some problem parsing bitcoin rpc port
     # disable following line for now
-    printf "\nSkip generating new config..."
+    printf "\nSkip generating new config...\n"
     # ~/bin/generate-bitmarkd-configuration -c local -n freebuilder.bitmark.lan -b "${HOME}/conf/bitcoin.conf" -l "${HOME}/conf/litecoin.conf" -u "${number}"
 
     # make sure every time a clean start, backup data directory
@@ -77,7 +74,7 @@ do
     dir="${config_dir}/bitmarkd${number}"
     if [ -d "${dir}/data" ]; then
         # remove backup directory if exist
-        [ -d "${dir}/data-backup" ] && rm -r "${dir}/data-backup"
+        [ -d "${dir}/data-backup" ] && rm -rf "${dir}/data-backup"
 
         [ -d "${dir}/data" ] && mv "${dir}/data" "${dir}/data-backup"
     fi
