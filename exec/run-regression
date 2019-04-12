@@ -3,17 +3,54 @@
 export GOPATH="${HOME}/gocode"
 export PATH="${GOPATH}/bin":$PATH
 
+SUCCESS_CODE=0
 ERROR_CODE=1
+
+# calculate time
+calculate_time() {
+    if [ -z $start_time ]; then
+        start_time=$(date +%s)
+    elif [ -z $end_time ]; then
+        end_time=$(date +%s)
+    else
+        printf "\nIt takes $(( $end_time - $start_time )) seconds bitmarkd connect\6n"
+    fi
+}
+
+check_script_result() {
+    if [ $# -ne 1 ]; then
+        printf "error argument, expect 1 but get $#"
+        exit $ERROR_CODE
+    fi
+
+    if [ $? -ne $SUCCESS_CODE ]; then
+        printf "execute $1 fail, abort..."
+        clean_up
+        exit $ERROR_CODE
+    fi
+}
+
+clean_up_programs=(
+    "bitmarkd"
+    "recorderd"
+    "bitcoind"
+    "litecoind"
+)
+
+clean_up() {
+    for program in "${clean_up_programs[@]}"
+    do
+        pkill -f "${program}"
+    done
+}
 
 # run crypto
 run-crypto
+check_script_result "run-crypto"
 
 # setup bitmarkd if bitmarkd config not exist
 setup-bitmarkd $1
-if [ $? -ne 0 ]; then
-    printf "\nsetup bitmarkd fail...abort\n"
-    exit $ERROR_CODE
-fi
+check_script_result "setup-bitmarkd"
 
 # run bitmarkd
 array=("1" "2" "3" "4" "5")
@@ -39,7 +76,7 @@ do
 done
 
 # start recorderd
-printf "\nStart recorderd..."
+printf "Start recorderd...\n"
 
 recorderd_dir="${HOME}/.config/recorderd"
 recorderd_file="recorderd.conf"
@@ -52,33 +89,29 @@ do
 done
 
 printf "recorderd is running\n"
-cd - 1
-
-start_time=""
-end_time=""
-# calculate time
-calculate_time() {
-    if [ -z $start_time ]; then
-        start_time=$(date +%s)
-    elif [ -z $end_time ]; then
-        end_time=$(date +%s)
-    else
-        printf "\nIt takes $(( $end_time - $start_time )) seconds bitmarkd connect\6n"
-    fi
-}
+cd - 1 > /dev/null
 
 # check connection, at leat 3 servers should be connected
 local=127.0.0.1
+start_time=""
+end_time=""
+
 calculate_time
-array=("1" "2" "3" "4" "5")
+found=false
 for number in "${array[@]}"
 do
     normal_mode=$(curl -s -k "https://${local}:2${number}31/bitmarkd/details" | jq | grep -c Normal)
-    if [ $normal_mode -ne 0 ]; then
+    if [ $normal_mode -ne $SUCCESS_CODE ]; then
         printf "\nnode ${number} in Normal mode, cli port 2${number}30, https port 2${number}31\n"
         calculate_time
         printf 'run-regression finished' | terminal-notifier
+        found=true
         break 1                 # break 1 levels of loop
     fi
 done
 calculate_time
+
+if [ "$found" = true ]; then
+    printf "bitmarkd cannot connected"
+    exit $ERROR_CODE
+fi
