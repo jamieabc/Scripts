@@ -21,8 +21,9 @@ package="github.com/bitmark-inc/bitmarkd"
 package_dir="${GOPATH}/src/${package}"
 bin_dir="${GOPATH}/bin"
 
-# rebuild bitmarkd only if no args of b
-if [ "$1" != "b" ]; then
+# rebuild bitmarkd only if args of b
+if [ "$1" = "b" ]; then
+    printf "rebuild bitmarkd\n"
     # remove existing bitmarkd
     # [ -d "${package_dir}" ] && go clean "${package}"
     [ -d "${package_dir}" ] && rm -rf "${package_dir}"
