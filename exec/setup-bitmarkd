@@ -71,7 +71,7 @@ do
     # ~/bin/generate-bitmarkd-configuration -c local -n freebuilder.bitmark.lan -b "${HOME}/conf/bitcoin.conf" -l "${HOME}/conf/litecoin.conf" -u "${number}"
 
     # make sure every time a clean start, backup data directory
-    printf "\nBacking up bitmarkd ${number} data directory, remove log/peer data...\n"
+    printf "\nBacking up bitmarkd %s data directory, remove log/peer data...\n" "${number}"
     dir="${config_dir}/bitmarkd${number}"
     if [ -d "${dir}/data" ]; then
         # remove backup directory if exist
