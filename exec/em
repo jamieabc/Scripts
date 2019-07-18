@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+client=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+
 # check if any frame open
-emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" 2>/dev/null | grep t &> /dev/null
+$client -n -e "(if (> (length (frame-list)) 1) 't)" 2>/dev/null | grep t &> /dev/null
 
 if [ "$?" -eq "1" ]; then
-    emacsclient -a '' -nqc "$@" &> /dev/null
+    $client -nqc "$@" &> /dev/null
 else
-    emacsclient -nq "$@" &> /dev/null
+    $client -nq "$@" &> /dev/null
 fi
