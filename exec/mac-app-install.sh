@@ -13,7 +13,7 @@ brew doctor
 brew update
 
 # install brew programs
-brew tap bitmark-inc/bitmark && brew install zeromq41
+brew install zeromq
 brew tap loadimpact/k6 && brew install k6
 brew install bazaar readline git wget imagemagick coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt autojump tig htop tree w3m ascii gcc bash-completion ack gpg gpg2 the_silver_searcher ispell cmake surfraw dos2unix doxygen fasd python python3 pstree calcurse ranger tmux reattach-to-user-namespace mongodb terminal-notifier go socat mytop most pandoc fcitx-remote-for-osx grc fish mtr ical-buddy tidy-html5 axel jq ssh-copy-id ansible ffmpeg kafka protobuf mono gnu-tar tldr editorconfig flow httpie mycli go latex2html watchman unrar ripgrep chezscheme percol nvm homebrew/x11/zentify sbcl redis libucl argon2 kubernetes-cli postgresql awscli gnupg gnupg2 carthage gpg-agent graphviz git-quick-stats cloc bat prettyping fzf diff-so-fancy fd autoconf automake gettext libtool noti ponysay aws-shell dep vegeta cask pgcli wdiff colordiff sonarqube sonar-scanner shellcheck berkeley-db4 boost miniupnpc openssl pkg-config qt libevent qrencode dnsmasq hardlink-osx calc ccrypt links lynx irssi mosh p7zip lnav libuv libmicrohttpd hub ghi ansible watch berkeley-db libnet libnids libpcap openssl mc leveldb highlight libxml2 librsvg cairo texinfo
 
@@ -89,10 +89,7 @@ gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D69
 rvm use ruby --install --default
 
 # ruby gems
-gem install --no-document rubocop scss_lint scss_lint_reporter_checkstyle
-gem install --no-document pry pry-doc pry-byebug awesome_print rspec
-gem install --no-document ruby-beautify rufo
-gem install --no-document ruby_parser gherkin cucumber
+gem install --no-document rubocop scss_lint scss_lint_reporter_checkstyle pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo ruby_parser gherkin cucumber solargraph minitest rake
 
 # install nvm & node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash

@@ -25,3 +25,4 @@ go get -u github.com/golang/mock/mockgen
 go get -u github.com/vektra/mockery/cmd/mockery
 go get -u github.com/lukehoban/go-outline
 go get -u honnef.co/go/tools
+go get -u github.com/godoctor/godoctor

@@ -77,8 +77,9 @@ do
         # remove backup directory if exist
         [ -d "${dir}/data-backup" ] && rm -rf "${dir}/data-backup"
 
-        [ -d "${dir}/data" ] && mv "${dir}/data" "${dir}/data-backup"
-        # [ -d "${dir}/data" ] && rm -rf "${dir}/data"
+        # [ -d "${dir}/data" ] && mv "${dir}/data" "${dir}/data-backup"
+        [ -d "${dir}/data" ] && rm -rf "${dir}/data"
+        # cp -r "$HOME/Downloads/tmp/data-testing-60" "${dir}/data"
     fi
 
     # remove existing log files
