@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+
 if [ "$#" -eq "0" ]; then
+    sudo apt update
     # install libraries
     sudo apt install -y flatpak flatpak-builder
     flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
