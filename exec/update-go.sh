@@ -19,7 +19,6 @@ go get -u github.com/cweill/gotests
 go get -u golang.org/x/tools/gopls
 go get -u github.com/go-delve/delve/cmd/dlv
 go get -u github.com/TrueFurby/go-callvis
-cd $GOPATH/src/github.com/TrueFurby/go-callvis && make && cd - 1
 go get -u github.com/golang/mock/gomock
 go get -u github.com/golang/mock/mockgen
 go get -u github.com/vektra/mockery/cmd/mockery
