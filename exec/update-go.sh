@@ -16,7 +16,7 @@ go get -u github.com/dougm/goflymake
 curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.1
 go get -u github.com/zmb3/gogetdoc
 go get -u github.com/cweill/gotests
-go get -u golang.org/x/tools/gopls
+go get golang.org/x/tools/gopls@latest
 go get -u github.com/go-delve/delve/cmd/dlv
 go get -u github.com/TrueFurby/go-callvis
 go get -u github.com/golang/mock/gomock
