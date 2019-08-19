@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+dirs = %w($HOME/Library/LaunchAgents /Library/LaunchAgents /System/Library/LaunchAgents)
+
+if ARGF.argv.length.zero?
+  puts "Usage: plist [search name]"
+  exit
+end
+
+def keyword(service_name)
+  service_name.split(".").last
+end
+
+service_name = ARGV.first
+result = []
+
+dirs.each do |dir|
+  files = `ls #{dir}`.split("\n")
+  result.concat(files.select { |f| f.downcase.match?(keyword(service_name.downcase)) }.map { |f| "#{dir}/#{f}" })
+end
+
+if result.length.zero?
+  puts "cannout find any #{service_name}"
+  exit
+end
+
+result.each do |k|
+  puts "found at #{k}"
+end
