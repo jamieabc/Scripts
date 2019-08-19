@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require "json"
 
 hosts = {
@@ -18,4 +19,3 @@ hosts.each do |category, host|
     parse_result line
   end
 end
-
