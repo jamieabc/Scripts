@@ -20,7 +20,8 @@ brew install bazaar readline git wget imagemagick coreutils findutils gnu-tar gn
 # haskell
 curl https://get-ghcup.haskell.org -sSf | sh
 curl -sSL https://get.haskellstack.org/ | sh
-cabal install hasktags
+cabal update
+cabal install hasktags happy
 
 # rust
 curl https://sh.rustup.rs -sSf | sh
