@@ -23,7 +23,7 @@ curl https://get-ghcup.haskell.org -sSf | sh
 curl -sSL https://get.haskellstack.org/ | sh
 stack update
 stack upgrade
-stack install hasktags happy stylish-haskell present hlint hoogle structured-haskell-mode hindent ghc-mod
+stack install hasktags happy stylish-haskell present hlint hoogle hindent ghc-mod
 
 # rust
 curl https://sh.rustup.rs -sSf | sh
