@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-client=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+PLATFORM='unknown'
+UNAMESTR=`uname`
+if [ "$UNAMESTR" = "Linux" ]; then
+    PLATFORM="linux"
+elif [ "$UNAMESTR" = "Darwin" ]; then
+    PLATFORM="mac"
+else
+    PLATFORM="windows"
+fi
+
+if [ "$PLATFORM" = "mac" ]; then
+    client=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+else
+    client=/usr/local/bin/emacsclient
+fi
 
 # check if any frame open
 $client -n -e "(if (> (length (frame-list)) 1) 't)" 2>/dev/null | grep t &> /dev/null
