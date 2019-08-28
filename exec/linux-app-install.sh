@@ -2,7 +2,7 @@
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install rxvt-unicode xsel argon2 openvpn
+sudo apt install rxvt-unicode xsel argon2 openvpn xdotool zenity
 
 # haskell
 # reference from https://docs.haskellstack.org/en/stable/README/
