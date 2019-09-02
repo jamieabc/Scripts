@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# modify core dump file limit
+ulimit -c unlimited
+
 #  install xcode command tool
 xcode-select --install
 # check
