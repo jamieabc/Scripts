@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# modify core dump file limit
-ulimit -c unlimited
-
 #  install xcode command tool
 xcode-select --install
 # check
@@ -92,10 +89,11 @@ update-go.sh
 # install rvm
 gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash -s stable
-rvm use ruby --install --default
+# rvm use ruby --install --default
+rvm install 2.6.3 --with-openssl-dir=/usr/local/opt/openssl
 
 # ruby gems
-gem install --no-document rubocop scss_lint scss_lint_reporter_checkstyle pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo ruby_parser gherkin cucumber solargraph minitest rake bundler pygments
+gem install rubocop scss_lint scss_lint_reporter_checkstyle pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo ruby_parser gherkin cucumber solargraph minitest rake bundler pygments httparty multi_json faraday
 
 # install nvm & node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
