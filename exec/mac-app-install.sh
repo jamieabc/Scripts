@@ -93,7 +93,7 @@ gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D69
 rvm install 2.6.3 --with-openssl-dir=/usr/local/opt/openssl
 
 # ruby gems
-gem install rubocop scss_lint scss_lint_reporter_checkstyle pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo ruby_parser gherkin cucumber solargraph minitest rake bundler pygments httparty multi_json faraday
+gem install rubocop pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo gherkin cucumber minitest rake bundler httparty faraday
 
 # install nvm & node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
