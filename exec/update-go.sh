@@ -4,6 +4,7 @@ go get -u github.com/stamblerre/gocode
 go get -u golang.org/x/tools
 go get -u golang.org/x/tools/cmd/guru
 go get -u golang.org/x/tools/cmd/goimports
+go get -u golang.org/x/tools/cmd/godoc
 go install golang.org/x/tools/cmd/gorename
 # go get -u golang.org/x/tools/cmd/...
 go get -u github.com/josharian/impl
@@ -25,3 +26,4 @@ go get -u github.com/vektra/mockery/cmd/mockery
 go get -u github.com/lukehoban/go-outline
 go get -u honnef.co/go/tools
 go get -u github.com/godoctor/godoctor
+go get github.com/securego/gosec/cmd/gosec
