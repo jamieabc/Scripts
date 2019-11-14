@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 PLATFORM='unknown'
-UNAMESTR=`uname`
+UNAMESTR=$(uname)
+
 if [ "$UNAMESTR" = "Linux" ]; then
     PLATFORM="linux"
 elif [ "$UNAMESTR" = "Darwin" ]; then
