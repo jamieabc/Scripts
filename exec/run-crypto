@@ -6,6 +6,7 @@ ltc_addr=mujyVMutzD9RWe67eSq49XLMpoMKNthR32
 wallet_path=${HOME}/.config/wallet/wallet.conf
 
 sync_wallet () {
+    printf "sync wallet balance\n"
     WALLET_PASSWORD=12345678 bitmark-wallet -C $wallet_path btc -t sync
     WALLET_PASSWORD=12345678 bitmark-wallet -C $wallet_path ltc -t sync
 }
@@ -35,7 +36,7 @@ litecoind -daemon
 sleep 5
 sync_wallet
 
-printf "mine for some coins..."
+printf "mine for some coins...\n"
 bitcoin-cli generatetoaddress 105 "$btc_addr" > /dev/null 2>&1
 litecoin-cli generatetoaddress 105 "$ltc_addr" > /dev/null 2>&1
 
