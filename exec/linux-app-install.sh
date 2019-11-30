@@ -11,3 +11,6 @@ curl -sSL https://get.haskellstack.org/ | sh
 stack update
 stack upgrade
 stack install hasktags happy stylish-haskell present hlint hoogle hindent
+
+# markdown preview
+npm -g install instant-markdown-d
