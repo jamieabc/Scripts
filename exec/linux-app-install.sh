@@ -14,3 +14,4 @@ stack install hasktags happy stylish-haskell present hlint hoogle hindent
 
 # markdown preview
 npm -g install instant-markdown-d
+pip3 install --user smdv
