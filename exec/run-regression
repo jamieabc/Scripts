@@ -73,7 +73,7 @@ run_bitmarkd() {
     do
         printf "\nStart bitmarkd %s\n" "${number}"
         cd "${HOME}/.config/bitmarkd${number}" || true
-        nohup bitmarkd --config-file="bitmarkd${number}.conf" start >/dev/null 2>&1 &
+        nohup bitmarkd --config-file="bitmarkd${number}.conf" > /dev/null 2>&1 &
 
         sleep 5
     done
