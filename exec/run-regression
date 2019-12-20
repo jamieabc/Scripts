@@ -30,7 +30,6 @@ check_script_result() {
 
 clean_up_programs=(
     "bitmarkd"
-    "recorderd"
     "bitcoind"
     "litecoind"
 )
@@ -80,33 +79,6 @@ run_bitmarkd() {
     done
 }
 
-stop_recorderd() {
-    # stop existing running recorderd
-    for pid in $(pgrep -f recorderd.conf)
-    do
-        printf "stop recorderd process %s...\n" "${pid}"
-        pkill pid
-        sleep 1
-    done
-}
-
-recorderd_dir="${HOME}/.config/recorderd"
-recorderd_file="recorderd.conf"
-run_recorderd() {
-    printf "\nStart recorderd...\n"
-
-    while ! pgrep -f "recorderd.conf" > /dev/null
-    do
-        cd "${recorderd_dir}"
-        printf "starting recorderd...\n"
-        nohup recorderd --config-file="${recorderd_file}" >/dev/null 2>&1 &
-        sleep 1
-    done
-
-    printf "recorderd is running\n"
-    cd - 1 > /dev/null
-}
-
 local=127.0.0.1
 check_bitmarkd() {
     for number in "${bitmarkd_cluster_numbers[@]}"
@@ -126,9 +98,6 @@ check_crypto
 
 setup_bitmarkd
 measure_time run_bitmarkd
-
-stop_recorderd
-# run_recorderd
 
 check_bitmarkd
 
