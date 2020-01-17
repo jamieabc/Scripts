@@ -54,3 +54,8 @@ pip3 install --user smdv
 git clone git://github.com/wting/autojump.git
 cd autojump && ./install.py
 cd .. && rm -rf autojump
+
+# go
+sudo add-apt-repository ppa:longsleep/golang-backports
+sudo apt update
+sudo apt install golang-go
