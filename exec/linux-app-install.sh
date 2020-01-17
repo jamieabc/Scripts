@@ -4,7 +4,7 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt -y install curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl
+sudo apt -y install curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -49,3 +49,8 @@ stack install hasktags happy stylish-haskell present hlint hoogle hindent
 # markdown preview
 npm -g install instant-markdown-d
 pip3 install --user smdv
+
+# autojump
+git clone git://github.com/wting/autojump.git
+cd autojump && ./install.py
+cd .. && rm -rf autojump
