@@ -35,8 +35,8 @@ sudo add-apt-repository ppa:aacebedo/fasd
 sudo apt-get update
 sudo apt-get install fasd
 
-# zplugin
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+# zinit
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 
 # haskell
 # reference from https://docs.haskellstack.org/en/stable/README/
