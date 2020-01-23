@@ -110,7 +110,3 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # zsh
 ln -s ~/Documents/Env-Settings/.zsh ~/.zsh
-git clone https://github.com/zdharma/fast-syntax-highlighting.git \
-    ~ZSH_CUSTOM/plugins/fast-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone git@github.com:marzocchi/zsh-notify.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/notify
