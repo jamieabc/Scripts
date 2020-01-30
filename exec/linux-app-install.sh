@@ -60,6 +60,8 @@ sudo add-apt-repository ppa:longsleep/golang-backports
 sudo apt update
 sudo apt install golang-go
 
+go get github.com/charmbracelet/glow
+
 # rvm
 sudo apt-add-repository -y ppa:rael-gc/rvm
 sudo apt-get update
