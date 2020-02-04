@@ -14,7 +14,7 @@ fi
 if [ "$PLATFORM" = "mac" ]; then
     client=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
 else
-    client=/usr/local/bin/emacsclient
+    client=emacsclient
 fi
 
 # check if any frame open
