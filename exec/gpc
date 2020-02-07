@@ -1,4 +1,5 @@
 #!/bin/bash
+# reference: https://stackoverflow.com/a/33457070
 set -e
 
 echo 'mode: count' > profile.cov
