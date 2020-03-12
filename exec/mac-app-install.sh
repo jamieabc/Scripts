@@ -100,11 +100,11 @@ rvm install 2.6.3 --with-openssl-dir=/usr/local/opt/openssl
 gem install rubocop pry pry-doc pry-byebug awesome_print rspec ruby-beautify rufo gherkin cucumber minitest rake bundler httparty faraday flog slack-ruby-client
 
 # install nvm & node
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 nvm install node && nvm alias default node
 
 # install node packages
-npm install -g js-beautify shelljs jsonlint npm-check-updates jshint jsxhint tern tern-highlight abel babel-eslint bower gulp gulp-cli grunt grunt-cli redmine-cli-modified eslint eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-jsx eslint-config-airbnb eslint-plugin-react csslint osprey yarn eslint-plugin-flowtype coffee-script esformatter esformatter-jsx esformatter-remove-trailing-commas i18next-parser prettier @vue/cli @angular/cli eslint-plugin-angular eslint-config-angular tslint-eslint-rules sass-lint wscat typescript forever nodemon http-server react-devtools appium appium-doctor authorize-ios vue-language-server javascript-typescript-langserver truffle ganache-cli gitbook-cli instant-markdown-d
+npm install -g js-beautify shelljs jsonlint npm-check-updates jshint jsxhint tern tern-highlight abel babel-eslint bower gulp gulp-cli grunt grunt-cli redmine-cli-modified eslint eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y eslint-plugin-jsx eslint-config-airbnb eslint-plugin-react csslint osprey yarn eslint-plugin-flowtype coffee-script esformatter esformatter-jsx esformatter-remove-trailing-commas i18next-parser prettier @vue/cli @angular/cli eslint-plugin-angular eslint-config-angular tslint-eslint-rules sass-lint wscat typescript forever nodemon http-server react-devtools appium appium-doctor authorize-ios vue-language-server javascript-typescript-langserver truffle ganache-cli gitbook-cli instant-markdown-d skygragon/leetcode-cli
 
 # clone tmux plugin manager (tpm)
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

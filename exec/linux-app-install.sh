@@ -47,7 +47,7 @@ stack upgrade
 stack install hasktags happy stylish-haskell present hlint hoogle hindent
 
 # markdown preview
-npm -g install instant-markdown-d
+npm -g install instant-markdown-d skygragon/leetcode-cli
 pip3 install --user smdv
 
 # autojump
