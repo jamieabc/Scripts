@@ -46,6 +46,9 @@ stack update
 stack upgrade
 stack install hasktags happy stylish-haskell present hlint hoogle hindent
 
+# nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+
 # markdown preview
 npm -g install instant-markdown-d leetcode-cli
 pip3 install --user smdv
