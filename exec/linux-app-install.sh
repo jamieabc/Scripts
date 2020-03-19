@@ -77,3 +77,6 @@ pip3 instal percol
 
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# blog
+snap install hugo
