@@ -17,10 +17,10 @@ cargo build --release
 cd ..
 rm -rf ripgrep
 
-# fd-find
-wget https://github.com/sharkdp/fd/releases/download/v7.4.0/fd-musl_7.4.0_amd64.deb
-sudo dpkg -i fd-musl_7.4.0_amd64.deb
-rm fd-musl_7.4.0_amd64.deb
+# # fd-find
+# wget https://github.com/sharkdp/fd/releases/download/v7.4.0/fd-musl_7.4.0_amd64.deb
+# sudo dpkg -i fd-musl_7.4.0_amd64.deb
+# rm fd-musl_7.4.0_amd64.deb
 
 # kubectl
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
