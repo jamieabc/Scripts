@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# reference https://github.com/mnewt/dotemacs/blob/60ae6061444b9ed12ceaec441de2e20c3764ee05/bin/setup#L74
 
 configure_opts=(
 	CFLAGS="-Ofast -march=native -pipe -falign-functions=64 -fomit-frame-pointer -funit-at-a-time -fforce-addr -mfpmath=sse -ffast-math -fno-finite-math-only -fstack-check -I/usr/local/opt/libxml2/include/libxml2"
