@@ -4,7 +4,7 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt -y install curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-tools pm-utils pm-hibernate htop python3-pip xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev 
+sudo apt -y install curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-tools pm-utils pm-hibernate htop python3-pip xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi
 
 # build emacs
 # configure --without-x --with-pop --with-mailutils
@@ -88,3 +88,8 @@ snap install hugo
 sudo add-apt-repository ppa:gnome-terminator
 sudo apt-get update
 sudo apt-get install terminator
+
+# bat
+wget https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb
+sudo gdebi bat_0.15.1_amd64.deb
+rm bat_0.15.1_amd64.deb
