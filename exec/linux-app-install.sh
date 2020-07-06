@@ -95,3 +95,8 @@ sudo apt-get install terminator
 wget https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb
 sudo gdebi bat_0.15.1_amd64.deb
 rm bat_0.15.1_amd64.deb
+
+# white noise
+sudo add-apt-repository ppa:costales/anoise
+sudo apt update
+sudo apt-get install anoise anoise-gui anoise-community-extension1 anoise-community-extension2 anoise-community-extension3 anoise-community-extension4
