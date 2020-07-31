@@ -7,7 +7,7 @@ sudo apt upgrade -y
 sudo apt install -y curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-tools pm-utils pm-hibernate htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https
 
 # build emacs
-# configure --without-x --with-pop --with-mailutils
+snap install emacs --beta --classic
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
