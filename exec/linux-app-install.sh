@@ -4,7 +4,7 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt -y install curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-tools pm-utils pm-hibernate htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi-core tig
+sudo apt install -y curl rxvt-unicode xsel argon2 openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf zsh nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-tools pm-utils pm-hibernate htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi-core tig vim apt-transport-https
 
 # build emacs
 # configure --without-x --with-pop --with-mailutils
@@ -36,7 +36,7 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # fasd
 sudo add-apt-repository ppa:aacebedo/fasd
 sudo apt-get update
-sudo apt-get install fasd
+sudo apt-get install -y fasd
 
 # zinit
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
@@ -64,7 +64,7 @@ cd .. && rm -rf autojump
 # go
 sudo add-apt-repository ppa:longsleep/golang-backports
 sudo apt update
-sudo apt install golang-go
+sudo apt install -y golang-go
 
 go get github.com/charmbracelet/glow
 
@@ -89,7 +89,7 @@ snap install hugo
 # terminal
 sudo add-apt-repository ppa:gnome-terminator
 sudo apt-get update
-sudo apt-get install terminator
+sudo apt-get install -y terminator
 
 # bat
 wget https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb
@@ -99,4 +99,10 @@ rm bat_0.15.1_amd64.deb
 # white noise
 sudo add-apt-repository ppa:costales/anoise
 sudo apt update
-sudo apt-get install anoise anoise-gui anoise-community-extension1 anoise-community-extension2 anoise-community-extension3 anoise-community-extension4
+sudo apt-get install -y anoise anoise-gui anoise-community-extension1 anoise-community-extension2 anoise-community-extension3 anoise-community-extension4
+
+# brave https://brave.com/linux/
+curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt update
+sudo apt install brave-browser
