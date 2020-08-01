@@ -114,3 +114,14 @@ sudo apt-get install -y fonts-moe-standard-song fonts-moe-standard-kai fonts-cns
 sudo add-apt-repository ppa:unit193/encryption
 sudo apt update
 sudo apt install -y veracrypt
+
+# install source code pro font
+FONT_HOME=~/.local/share/fonts
+mkdir -p "$FONT_HOME/adobe"
+
+(git clone \
+   --branch release \
+   --depth 1 \
+   'https://github.com/adobe-fonts/source-code-pro.git' \
+   "$FONT_HOME/adobe/source-code-pro" && \
+fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
