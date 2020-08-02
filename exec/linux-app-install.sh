@@ -125,3 +125,8 @@ mkdir -p "$FONT_HOME/adobe"
    'https://github.com/adobe-fonts/source-code-pro.git' \
    "$FONT_HOME/adobe/source-code-pro" && \
 fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
+
+# screen recorder
+sudo add-apt-repository ppa:obsproject/obs-studio
+sudo apt update
+sudo apt install -y simplescreenrecorder obs-studio
