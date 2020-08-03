@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-go get -u github.com/stamblerre/gocode
 go get -u golang.org/x/tools/cmd/...
 go get -u github.com/google/pprof
 go install golang.org/x/tools/cmd/gorename
