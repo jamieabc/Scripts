@@ -24,3 +24,4 @@ go get -u github.com/godoctor/godoctor
 go get github.com/securego/gosec/cmd/gosec
 go get -u github.com/charmbracelet/glow # render markdown in CLI
 go get -u golang.org/x/tools/cmd/goimports
+go get -u github.com/juntaki/gogtags
