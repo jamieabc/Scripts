@@ -120,3 +120,10 @@ fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
 sudo add-apt-repository ppa:obsproject/obs-studio
 sudo apt update
 sudo apt install -y pavucontrol simplescreenrecorder obs-studio
+
+# wine
+wget -nc https://dl.winehq.org/wine-builds/winehq.key
+sudo apt-key add winehq.key
+rm winehq.key
+sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+sudo apt install -y --install-recommends winehq-stable
