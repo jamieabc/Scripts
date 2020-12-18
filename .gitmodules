@@ -1,0 +1,3 @@
+[submodule "exec/cheat"]
+	path = exec/cheat
+	url = git@github.com:chubin/cheat.sh.git
