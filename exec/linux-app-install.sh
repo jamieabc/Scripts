@@ -127,3 +127,9 @@ sudo apt-key add winehq.key
 rm winehq.key
 sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
 sudo apt install -y --install-recommends winehq-stable
+
+# gh
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+sudo apt-add-repository https://cli.github.com/packages
+sudo apt update
+sudo apt install gh
