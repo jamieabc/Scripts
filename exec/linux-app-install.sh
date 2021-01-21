@@ -82,9 +82,9 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 snap install hugo
 
 # bat
-wget https://github.com/sharkdp/bat/releases/download/v0.15.1/bat_0.15.1_amd64.deb
-sudo gdebi bat_0.15.1_amd64.deb
-rm bat_0.15.1_amd64.deb
+wget https://github.com/sharkdp/bat/releases/download/v0.17.1/bat_0.17.1_amd64.deb
+sudo dpkg -i bat_0.17.1_amd64.deb
+rm bat_0.17.1_amd64.deb
 
 # white noise
 sudo add-apt-repository ppa:costales/anoise
