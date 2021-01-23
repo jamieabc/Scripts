@@ -4,7 +4,7 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools golang terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi
+sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools golang terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi powertop
 
 # build emacs
 snap install emacs --beta --classic
@@ -85,11 +85,6 @@ snap install hugo
 wget https://github.com/sharkdp/bat/releases/download/v0.17.1/bat_0.17.1_amd64.deb
 sudo dpkg -i bat_0.17.1_amd64.deb
 rm bat_0.17.1_amd64.deb
-
-# white noise
-sudo add-apt-repository ppa:costales/anoise
-sudo apt update
-sudo apt-get install -y anoise anoise-gui anoise-community-extension1 anoise-community-extension2 anoise-community-extension3 anoise-community-extension4
 
 # brave https://brave.com/linux/
 curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
