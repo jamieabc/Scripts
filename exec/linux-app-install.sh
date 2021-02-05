@@ -56,6 +56,9 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 npm -g install instant-markdown-d leetcode-cli
 pip3 install --user smdv
 
+# install percol
+pip install percol
+
 # autojump
 git clone git://github.com/wting/autojump.git
 cd autojump && ./install.py
