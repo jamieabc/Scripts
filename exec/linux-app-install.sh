@@ -4,26 +4,13 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf nodejs stunnel4 zsh cargo fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools golang terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi powertop chrome-gnome-shell acpi jq bsdmainutils
+sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf stunnel4 zsh fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools golang terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi powertop chrome-gnome-shell acpi jq bsdmainutils
 
 # build emacs
 snap install emacs --beta --classic
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# ripgrep
-git clone https://github.com/BurntSushi/ripgrep
-cd ripgrep
-cargo build --release
-[ -d $HOME/exec ] && mv ./target/release/rg $HOME/exec/
-cd ..
-rm -rf ripgrep
-
-# # fd-find
-# wget https://github.com/sharkdp/fd/releases/download/v7.4.0/fd-musl_7.4.0_amd64.deb
-# sudo dpkg -i fd-musl_7.4.0_amd64.deb
-# rm fd-musl_7.4.0_amd64.deb
 
 # kubectl
 cd $HOME/exec/
@@ -52,30 +39,25 @@ stack install hasktags happy stylish-haskell present hlint hoogle hindent
 # nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-# markdown preview
-npm -g install instant-markdown-d leetcode-cli
-pip3 install --user smdv
+# pip for python 2&3
+sudo apt update
+sudo apt install -y python3-pip
 
-# install percol
-pip install percol
+pip3 install --user smdv
 
 # autojump
 git clone git://github.com/wting/autojump.git
 cd autojump && ./install.py
 cd .. && rm -rf autojump
 
+# terminal render markdown
 go get github.com/charmbracelet/glow
 
 # rvm
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash
 
-# gems
-gem install ghi
-
-# pip for python 2&3
-sudo apt update
-sudo apt install -y python3-pip
+# percol
 pip3 instal percol
 
 # tmux
@@ -119,15 +101,12 @@ sudo add-apt-repository ppa:obsproject/obs-studio
 sudo apt update
 sudo apt install -y pavucontrol simplescreenrecorder obs-studio
 
-# wine
-wget -nc https://dl.winehq.org/wine-builds/winehq.key
-sudo apt-key add winehq.key
-rm winehq.key
-sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-sudo apt install -y --install-recommends winehq-stable
-
 # gh
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
 sudo apt-add-repository https://cli.github.com/packages
 sudo apt update
 sudo apt install gh
+
+# at last time, it might fail because npm has not installed
+# markdown preview
+npm -g install instant-markdown-d leetcode-cli
