@@ -4,7 +4,7 @@ cd ~/exec/
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf stunnel4 zsh fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools golang terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi powertop chrome-gnome-shell acpi jq bsdmainutils
+sudo apt install -y curl rxvt-unicode xsel openvpn xdotool zenity ibus libxcb-xtest0 bash-completion resolvconf stunnel4 zsh fonts-firacode build-essential wmctrl python dconf-editor pm-utils htop xclip tmux libsecret-tools texinfo libxpm-dev libjpeg-dev libgif-dev libtiff-dev libgnutls28-dev libncurses5-dev gdebi gdebi-core tig vim apt-transport-https pcmanx-gtk2 libsecret-tools terminator dkms net-tools silversearcher-ag cmake gcc clang gdb valgrind ascii grub-customizer fcitx fcitx-m17n fcitx-table-boshiamy rofi powertop chrome-gnome-shell acpi jq bsdmainutils
 
 # build emacs
 snap install emacs --beta --classic
@@ -110,3 +110,6 @@ sudo apt install gh
 # at last time, it might fail because npm has not installed
 # markdown preview
 npm -g install instant-markdown-d leetcode-cli
+
+# gvm
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
