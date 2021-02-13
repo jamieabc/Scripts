@@ -113,3 +113,6 @@ npm -g install instant-markdown-d leetcode-cli
 
 # gvm
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+
+# solarized dircolors
+# https://github.com/huyz/dircolors-solarized
