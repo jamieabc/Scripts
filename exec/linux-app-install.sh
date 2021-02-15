@@ -96,11 +96,6 @@ mkdir -p "$FONT_HOME/adobe"
    "$FONT_HOME/adobe/source-code-pro" && \
 fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
 
-# screen recorder
-sudo add-apt-repository ppa:obsproject/obs-studio
-sudo apt update
-sudo apt install -y pavucontrol simplescreenrecorder obs-studio
-
 # gh
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
 sudo apt-add-repository https://cli.github.com/packages
