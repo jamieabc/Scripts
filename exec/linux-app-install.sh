@@ -104,7 +104,7 @@ sudo apt install gh
 
 # at last time, it might fail because npm has not installed
 # markdown preview
-npm -g install instant-markdown-d leetcode-cli
+npm -g install instant-markdown-d leetcode-cli diff-so-fancy
 
 # gvm
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
