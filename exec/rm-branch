@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+if ARGV.size == 0
+  puts 'please input branch name'
+  return
+end
+
+branches = `git branch`
+branches = branches.split("\n").map{ |str| str.strip }
+
+matches = branches.select { |str| str.start_with?(ARGV[0]) }
+matches.each do |branch|
+  `git branch -D #{branch}`
+end
