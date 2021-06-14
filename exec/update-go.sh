@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+go get -u github.com/motemen/gore/cmd/gore
+go get -u github.com/stamblerre/gocode
+go get -u golang.org/x/tools/cmd/godoc
+go get -u golang.org/x/tools/cmd/guru
 go get -u golang.org/x/tools/cmd/...
 go get -u github.com/google/pprof
 go install golang.org/x/tools/cmd/gorename
@@ -11,7 +15,7 @@ go get -u golang.org/x/lint/golint
 go get -u github.com/rogpeppe/godef
 go get -u github.com/dougm/goflymake
 go get -u github.com/zmb3/gogetdoc
-go get -u github.com/cweill/gotests
+go get -u github.com/cweill/gotests/...
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 go get -u github.com/go-delve/delve/cmd/dlv
 go get -u github.com/TrueFurby/go-callvis
